@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React from 'react';
 
-class Option extends Component {
+class Option extends React.Component {
 
     render() {
 
@@ -8,17 +8,22 @@ class Option extends Component {
 
         const style = {
             width   : props.width,
-            top     : props.height + 1,
+            top     : props.height - 1,
             display : props.visible ? '' : 'none'
         };
 
+        const options = props.options.map((item, index) => {
+            let handleClick = props.handleChoose.bind(null, index);
+            return (
+                <li key={index} onClick={handleClick}>
+                    {item.text}
+                </li>
+            )
+        });
+
         return (
             <ul className="relect-option" style={style}>
-                <li>123</li>
-                <li>123</li>
-                <li>123</li>
-                <li>123</li>
-                <li>123</li>
+                {options}
             </ul>
         )
     }

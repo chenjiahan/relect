@@ -1,18 +1,45 @@
+/* -- color config -- */
+$option-height      : 28px;
+$border-color       : #D9D9D9;
+$border-hover-color : #B9B9B9;
+$arrow-color        : #B9B9B9;
+$arrow-hover-color  : #A0A0A0;
+$clear-color        : #B9B9B9;
+$clear-hover-color  : #FF7D7D;
 
+/* -- relect container -- */
 .relect {
     display: inline-block;
     position: relative;
     text-align: left;
-}
-.relect-value {
-    display: inline-block;
-    background: #fff;
-    border: 1px solid #d9d9d9;
+    user-select: none;
     &:hover {
-        border-color: #b9b9b9;
-        border-top-color: #a0a0a0;
+        .relect-box {
+            border-color: $border-hover-color;
+        }
+        .relect-option {
+            border-top-color: $border-hover-color;
+        }
     }
 }
+
+/* -- box -- */
+.relect-box {
+    display: inline-block;
+    cursor: pointer;
+    padding: 0 10px;
+    background: #fff;
+    box-sizing: border-box;
+    border: 1px solid $border-color;
+}
+.relect-placeholder {
+    color: #999;
+}
+.relect-value {
+    color: #333;
+}
+
+/* -- option -- */
 .relect-option {
     position: absolute;
     left: 0;
@@ -20,14 +47,75 @@
     padding: 0;
     z-index: 10;
     list-style: none;
+    overflow-y: auto;
+    max-height: $option-height * 8 + 2px;
+    box-sizing: border-box;
     border: 1px solid #ccc;
-    border-top-color: #d9d9d9;
-    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
     li {
+        cursor: pointer;
         padding: 0 10px;
-        line-height: 24px;
+        line-height: $option-height;
         &:hover {
             background: #eee;
+        }
+    }
+}
+
+/* -- arrow -- */
+.relect-arrow {
+    position: absolute;
+    top: 50%;
+    right: 15px;
+    width: 0;
+    height: 0;
+    z-index: 1;
+    font-size: 0;
+    overflow: hidden;
+    margin-top: -3px;
+    border: solid 6px;
+    border-color: $arrow-color transparent transparent;
+    transition: transform .4s ease;
+    &:hover {
+        border-color: $arrow-hover-color transparent transparent;
+    }
+}
+.relect-arrow-rotate {
+    transform: rotate(180deg);
+}
+
+/* -- clear -- */
+.relect-clear {
+    position: absolute;
+    cursor: pointer;
+    top: 50%;
+    right: 35px;
+    width: 12px;
+    height: 12px;
+    margin-top: -6px;
+    &:before,
+    &:after {
+        position: absolute;
+        content: '';
+        height: 2px;
+        width: 100%;
+        top: 50%;
+        left: 0;
+        margin-top: -1px;
+        background: $clear-color;
+        border-radius: 100%;
+        transition: background .2s;
+    }
+    &:before {
+        transform: rotate(45deg);
+    }
+    &:after {
+        transform: rotate(-45deg);
+    }
+    &:hover {
+        &:before,
+        &:after {
+            background: $clear-hover-color;
         }
     }
 }
