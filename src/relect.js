@@ -12,30 +12,31 @@ class Relect extends React.Component {
     static propTypes = {
         width   : PropTypes.number,
         height  : PropTypes.number,
-        options : PropTypes.array.isRequired,
+        options : PropTypes.array,
         placeholder: PropTypes.string
     };
 
     static defaultProps = {
-        width  : 300,
-        height : 38,
-        placeholder: ''
+        width       : 300,
+        height      : 38,
+        options     : [],
+        placeholder : ''
     };
 
     state = {
         chosen: null,
-        optionVisible: false
+        showOption: false
     };
 
     toggleOption = () => {
-        const optionVisible = !this.state.optionVisible;
-        this.setState({ optionVisible });
+        const showOption = !this.state.showOption;
+        this.setState({ showOption });
     };
 
     handleChoose = index => {
         this.setState({
             chosen: index,
-            optionVisible: false
+            showOption: false
         });
         let item = this.props.options[index];
         this.props.onChange(item.val, item.text);
@@ -44,9 +45,14 @@ class Relect extends React.Component {
     handleClear = (event) => {
         event.stopPropagation();
         this.setState({
-            chosen: null
+            chosen: null,
+            showOption: false
         });
         this.props.onChange(null, null);
+    };
+
+    handleBlur = () => {
+        this.setState({ showOption: false })
     };
 
     renderBox = () => {
@@ -62,11 +68,11 @@ class Relect extends React.Component {
     };
 
     renderOptions = () => {
-        const { optionVisible } = this.state;
+        const { showOption } = this.state;
         return (
             <Option
                 {...this.props}
-                visible={optionVisible}
+                visible={showOption}
                 handleChoose={this.handleChoose}
             />
         )
@@ -74,7 +80,7 @@ class Relect extends React.Component {
 
     render() {
         return (
-            <div className="relect">
+            <div className="relect" tabIndex="0" onBlur={this.handleBlur}>
                 {this.renderBox()}
                 {this.renderOptions()}
             </div>

@@ -13,7 +13,9 @@ $clear-hover-color  : #FF7D7D;
     position: relative;
     text-align: left;
     user-select: none;
-    &:hover {
+    &:hover,
+    &:focus {
+        outline: none;
         .relect-box {
             border-color: $border-hover-color;
         }
