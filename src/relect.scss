@@ -1,5 +1,4 @@
 /* -- color config -- */
-$option-height      : 28px;
 $border-color       : #D9D9D9;
 $border-hover-color : #B9B9B9;
 $border-focus-color : #03A9F4;
@@ -58,19 +57,19 @@ $clear-hover-color  : #FF7D7D;
     padding: 0;
     z-index: 10;
     list-style: none;
+    background: #fff;
     overflow-y: auto;
-    max-height: $option-height * 8 + 2px;
     box-sizing: border-box;
-    border: 1px solid #ccc;
+    border: 1px solid $border-color;
     box-shadow: 0 1px 3px rgba(0,0,0,0.2);
     li {
         cursor: pointer;
         padding: 0 10px;
-        line-height: $option-height;
-        &:hover {
-            background: #eee;
-        }
     }
+}
+.relect-focused-option {
+    color: #fff;
+    background: #03A9F4;
 }
 
 /* -- arrow -- */

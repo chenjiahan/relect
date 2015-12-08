@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React    from 'react';
 import ReactDOM from 'react-dom';
-import Relect from '../../src/relect';
+import Relect   from '../../src/relect';
 import './index.scss';
 
 const options = [
@@ -19,7 +19,7 @@ const options = [
     { val: 12, text: 'Melisandre' }
 ];
 
-class App extends Component {
+class App extends React.Component {
 
     handleChange = (val, text) => {
         console.log('val: ', val, ', text: ', text);
@@ -27,12 +27,16 @@ class App extends Component {
 
     render() {
         return (
-            <div className="wrapper">
-                <Relect
-                    options={options}
-                    placeholder={'relect something'}
-                    onChange={this.handleChange}
-                />
+            <div style={{paddingTop: (window.innerHeight - 525) / 2}}>
+                <h1 className="title">Relect</h1>
+                <h3 className="intro">A Tiny React Single Select Component.</h3>
+                <div className="wrapper">
+                    <Relect
+                        options={options}
+                        placeholder={'relect something'}
+                        onChange={this.handleChange}
+                    />
+                </div>
             </div>
         )
     }
@@ -42,4 +46,3 @@ ReactDOM.render(
     <App />,
     document.getElementById('app')
 );
-
