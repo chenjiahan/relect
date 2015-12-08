@@ -1,0 +1,33 @@
+
+.relect {
+    display: inline-block;
+    position: relative;
+    text-align: left;
+}
+.relect-value {
+    display: inline-block;
+    background: #fff;
+    border: 1px solid #d9d9d9;
+    &:hover {
+        border-color: #b9b9b9;
+        border-top-color: #a0a0a0;
+    }
+}
+.relect-option {
+    position: absolute;
+    left: 0;
+    margin: 0;
+    padding: 0;
+    z-index: 10;
+    list-style: none;
+    border: 1px solid #ccc;
+    border-top-color: #d9d9d9;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+    li {
+        padding: 0 10px;
+        line-height: 24px;
+        &:hover {
+            background: #eee;
+        }
+    }
+}
