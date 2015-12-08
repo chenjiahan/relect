@@ -9,7 +9,7 @@ class Option extends React.Component {
         const style = {
             width   : props.width,
             top     : props.height - 1,
-            display : props.visible ? '' : 'none'
+            display : props.showOption ? '' : 'none'
         };
 
         const options = props.options.map((item, index) => {

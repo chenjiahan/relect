@@ -25,7 +25,8 @@ class Relect extends React.Component {
 
     state = {
         chosen: null,
-        showOption: false
+        showOption: false,
+        focusedOption: null
     };
 
     toggleOption = () => {
@@ -34,12 +35,12 @@ class Relect extends React.Component {
     };
 
     handleChoose = index => {
+        let item = this.props.options[index];
+        this.props.onChange(item.val, item.text);
         this.setState({
             chosen: index,
             showOption: false
         });
-        let item = this.props.options[index];
-        this.props.onChange(item.val, item.text);
     };
 
     handleClear = (event) => {
@@ -55,13 +56,45 @@ class Relect extends React.Component {
         this.setState({ showOption: false })
     };
 
+    handleKeyDown = (event) => {
+        event.preventDefault();
+        switch (event.which) {
+            case 8 : // Delete
+                this.handleClear(event);
+                break;
+            case 27: // ESC
+                this.setState({ showOption: false });
+                break;
+            case 13: // Enter
+            case 32: // Space
+                this.toggleOption();
+                break;
+            case 38: // Up
+                if (this.props.showOption) {
+
+                } else {
+                    this.setState({ showOption: true });
+                }
+                break;
+            case 40: // Down
+                if (this.props.showOption) {
+
+                } else {
+                    this.setState({ showOption: true });
+                }
+                break;
+        }
+    };
+
     renderBox = () => {
-        const { chosen } = this.state;
+        const { chosen, showOption, focusedOption } = this.state;
         return (
             <Box
                 {...this.props}
                 chosen={chosen}
+                showOption={showOption}
                 onClick={this.toggleOption}
+                focusedOption={focusedOption}
                 handleClear={this.handleClear}
             />
         )
@@ -72,7 +105,7 @@ class Relect extends React.Component {
         return (
             <Option
                 {...this.props}
-                visible={showOption}
+                showOption={showOption}
                 handleChoose={this.handleChoose}
             />
         )
@@ -80,7 +113,11 @@ class Relect extends React.Component {
 
     render() {
         return (
-            <div className="relect" tabIndex="0" onBlur={this.handleBlur}>
+            <div tabIndex="0"
+                 className="relect"
+                 onBlur={this.handleBlur}
+                 onKeyDown={this.handleKeyDown}
+            >
                 {this.renderBox()}
                 {this.renderOptions()}
             </div>

@@ -23,7 +23,6 @@ class Box extends React.Component {
     render() {
 
         const props = this.props;
-
         const style = {
             width  : props.width,
             height : props.height,
@@ -34,7 +33,7 @@ class Box extends React.Component {
             <div className="relect-box" style={style} onClick={props.onClick}>
                 {this.renderContent()}
                 {this.renderClear()}
-                <span className="relect-arrow"></span>
+                <span className="relect-arrow" />
             </div>
         )
     }

@@ -2,6 +2,7 @@
 $option-height      : 28px;
 $border-color       : #D9D9D9;
 $border-hover-color : #B9B9B9;
+$border-focus-color : #03A9F4;
 $arrow-color        : #B9B9B9;
 $arrow-hover-color  : #A0A0A0;
 $clear-color        : #B9B9B9;
@@ -13,14 +14,21 @@ $clear-hover-color  : #FF7D7D;
     position: relative;
     text-align: left;
     user-select: none;
-    &:hover,
-    &:focus {
-        outline: none;
+    &:hover {
         .relect-box {
             border-color: $border-hover-color;
         }
         .relect-option {
             border-top-color: $border-hover-color;
+        }
+    }
+    &:focus {
+        outline: none;
+        .relect-box {
+            border-color: $border-focus-color;
+        }
+        .relect-option {
+            border-top-color: $border-focus-color;
         }
     }
 }
@@ -33,6 +41,7 @@ $clear-hover-color  : #FF7D7D;
     background: #fff;
     box-sizing: border-box;
     border: 1px solid $border-color;
+    transition: border-color .1s;
 }
 .relect-placeholder {
     color: #999;
@@ -77,13 +86,9 @@ $clear-hover-color  : #FF7D7D;
     margin-top: -3px;
     border: solid 6px;
     border-color: $arrow-color transparent transparent;
-    transition: transform .4s ease;
     &:hover {
         border-color: $arrow-hover-color transparent transparent;
     }
-}
-.relect-arrow-rotate {
-    transform: rotate(180deg);
 }
 
 /* -- clear -- */
@@ -99,13 +104,13 @@ $clear-hover-color  : #FF7D7D;
     &:after {
         position: absolute;
         content: '';
-        height: 2px;
-        width: 100%;
         top: 50%;
         left: 0;
+        width: 100%;
+        height: 2px;
         margin-top: -1px;
-        background: $clear-color;
         border-radius: 100%;
+        background: $clear-color;
         transition: background .2s;
     }
     &:before {
