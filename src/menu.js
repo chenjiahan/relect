@@ -1,15 +1,14 @@
 import React from 'react';
 
-class Option extends React.Component {
+class Menu extends React.Component {
 
     render() {
 
         const props = this.props;
-
         const style = {
             top        : props.height - 1,
             width      : props.width,
-            display    : props.showOption ? '' : 'none',
+            display    : props.showMenu ? '' : 'none',
             lineHeight : props.optionHeight + 'px',
             maxHeight  : props.optionHeight * 8 + 2
         };
@@ -37,4 +36,4 @@ class Option extends React.Component {
     }
 }
 
-export default Option;
+export default Menu;

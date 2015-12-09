@@ -2,37 +2,30 @@ import React from 'react';
 
 class Box extends React.Component {
 
-    renderContent = () => {
-        const { chosen, options, placeholder } = this.props;
-        if (chosen === null) {
-            return <span className="relect-placeholder">{placeholder}</span>;
+    renderContent(props) {
+        if (props.chosen === null) {
+            return <span className="relect-placeholder">{props.placeholder}</span>;
         } else {
-            return <span className="relect-value">{options[chosen].text}</span>;
+            return <span className="relect-value">{props.options[props.chosen].text}</span>;
         }
     };
 
-    renderClear = () => {
-        const { chosen, handleClear } = this.props;
-        if (chosen === null) {
-            return null;
-        } else {
-            return <span className="relect-clear" onClick={handleClear} />;
-        }
+    renderClear(props) {
+        return props.chosen === null ? null : <span className="relect-clear" onClick={props.handleClear} />;
     };
 
     render() {
 
         const props = this.props;
         const style = {
-            width  : props.width,
-            height : props.height,
-            lineHeight: props.height + 'px'
+            width      : props.width,
+            lineHeight : props.height - 2 + 'px'
         };
 
         return (
             <div className="relect-box" style={style} onClick={props.onClick}>
-                {this.renderContent()}
-                {this.renderClear()}
+                {this.renderContent(props)}
+                {this.renderClear(props)}
                 <span className="relect-arrow" />
             </div>
         )
