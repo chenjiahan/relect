@@ -55,7 +55,7 @@ class App extends React.Component {
                 <h3 className="intro">A Tiny React Single Select Component.</h3>
                 <div className="wrapper">
                     <Relect chosen={this.state.chosen}
-                            options={arrayOptions}
+                            options={objectOptions}
                             disabled={this.state.disabled}
                             placeholder={'placeholder'}
                             onChange={this.handleChange.bind(this)}

@@ -1,5 +1,5 @@
 # Relect
-A Tiny React Single Select Component.
+A Tiny React Single Select Component.    
 [Example](http://chenjiahan.github.io/relect/)
 
 ## Install
@@ -20,14 +20,11 @@ A Tiny React Single Select Component.
     
         constructor(props) {
             super(props);
-            
             this.state = { chosen: null }
         }
         
         onChange(index) {
-            this.setState({
-                chosen: index
-            });
+            this.setState({ chosen: index });
         }
     
         render() {

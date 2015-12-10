@@ -129,7 +129,7 @@
 	                    'div',
 	                    { className: 'wrapper' },
 	                    _react2.default.createElement(_Relect2.default, { chosen: this.state.chosen,
-	                        options: arrayOptions,
+	                        options: objectOptions,
 	                        disabled: this.state.disabled,
 	                        placeholder: 'placeholder',
 	                        onChange: this.handleChange.bind(this)
@@ -20139,7 +20139,7 @@
 	                    _react2.default.createElement(
 	                        'span',
 	                        null,
-	                        options[chosen]
+	                        options[chosen].text || options[chosen]
 	                    ),
 	                    _react2.default.createElement('span', { className: 'relect-clear', onClick: props.handleClear })
 	                );
