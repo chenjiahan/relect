@@ -14,9 +14,9 @@ class Menu extends React.Component {
         };
 
         const options = props.options.map((item, index) => {
-            let handleClick = props.handleChoose.bind(null, index);
-            let handleMouseEnter = props.focusOption.bind(null, index);
-            let className = index === props.focused ? 'relect-focused-option' : '';
+            const handleClick = props.handleChoose.bind(null, index);
+            const handleMouseEnter = props.focusOption.bind(null, index);
+            const className = index === props.focused ? 'relect-focused-option' : '';
             return (
                 <li key={index}
                     onClick={handleClick}
@@ -28,11 +28,7 @@ class Menu extends React.Component {
             )
         });
 
-        return (
-            <ul className="relect-option" style={style}>
-                {options}
-            </ul>
-        )
+        return <ul className="relect-option" style={style}>{options}</ul>;
     }
 }
 

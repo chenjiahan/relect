@@ -1,6 +1,6 @@
 import React    from 'react';
 import ReactDOM from 'react-dom';
-import Relect   from '../../src/relect';
+import Relect   from '../../src/Relect';
 import './index.scss';
 
 const objectOptions = [
@@ -23,9 +23,25 @@ const arrayOptions = ['one', 'two', 'three', 'four', 'five', 'six'];
 
 class App extends React.Component {
 
-    handleChange = (val, text) => {
-        console.log('val: ', val, ', text: ', text);
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            chosen: null
+        }
+    }
+
+    handleChange = chosen => {
+        this.setState({ chosen });
     };
+
+    clear = () => {
+        this.setState({ chosen: null });
+    }
+
+    selectFirstOption = () => {
+        this.setState({ chosen: 0 });
+    }
 
     render() {
         return (
@@ -33,11 +49,15 @@ class App extends React.Component {
                 <h1 className="title">Relect</h1>
                 <h3 className="intro">A Tiny React Single Select Component.</h3>
                 <div className="wrapper">
-                    <Relect value={10}
+                    <Relect chosen={this.state.chosen}
                             options={arrayOptions}
                             placeholder={'placeholder'}
                             onChange={this.handleChange}
                     />
+                    <div>
+                        <button onClick={this.clear}>clear</button>
+                        <button onClick={this.selectFirstOption}>select the first option</button>
+                    </div>
                 </div>
             </div>
         )

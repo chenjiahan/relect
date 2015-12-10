@@ -4,8 +4,8 @@
 
 import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
-import Menu     from './menu';
-import Box      from './box';
+import Menu     from './Menu';
+import Box      from './Box';
 import './relect.scss';
 
 class Relect extends React.Component {
@@ -13,6 +13,7 @@ class Relect extends React.Component {
     static propTypes = {
         width        : PropTypes.number,
         height       : PropTypes.number,
+        chosen       : PropTypes.any,
         options      : PropTypes.array,
         placeholder  : PropTypes.string,
         optionHeight : PropTypes.number
@@ -27,7 +28,6 @@ class Relect extends React.Component {
     };
 
     state = {
-        chosen   : null,  // index of chosen option
         focused  : null,  // index of focused option
         showMenu : false  // whether show option
     };
@@ -41,21 +41,18 @@ class Relect extends React.Component {
     };
 
     handleChoose = index => {
-        let item = this.props.options[index];
-        this.props.onChange(item.val || item, item.text || item);
+        this.props.onChange(index);
         this.setState({
-            chosen   : index,
             showMenu : false
         });
     };
 
-    handleClear = (event) => {
+    handleClear = event => {
         event.stopPropagation();
         this.setState({
-            chosen   : null,
             showMenu : false
         });
-        this.props.onChange(null, null);
+        this.props.onChange(null);
     };
 
     handleBlur = () => {
@@ -107,26 +104,23 @@ class Relect extends React.Component {
         // calc offset
         // displays up to 8 options in the same time
         let length = this.props.options.length;
-        if (length <= 8) {
-            return;
-        }
+        if (length > 8) {
+            let height  = this.props.optionHeight;
+            let current = this.menuDOM.scrollTop;
+            let max = Math.min((length - 8) * height, focused * height);
+            let min = Math.max(0, (focused - 7) * height);
 
-        let height = this.props.optionHeight;
-        let max = Math.min((length - 8) * height, focused * height);
-        let min = Math.max(0, (focused - 7) * height);
-        let current = this.menuDOM.scrollTop;
-
-        if (current > max) {
-            this.menuDOM.scrollTop = max;
-        } else if (current < min) {
-            this.menuDOM.scrollTop = min;
+            if (current > max) {
+                this.menuDOM.scrollTop = max;
+            } else if (current < min) {
+                this.menuDOM.scrollTop = min;
+            }
         }
     };
 
     renderBox = () => {
         return (
             <Box {...this.props}
-                 chosen={this.state.chosen}
                  onClick={this.toggleMenu}
                  showMenu={this.state.showMenu}
                  handleClear={this.handleClear}

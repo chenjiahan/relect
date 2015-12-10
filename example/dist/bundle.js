@@ -56,9 +56,9 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _relect = __webpack_require__(159);
+	var _Relect = __webpack_require__(159);
 
-	var _relect2 = _interopRequireDefault(_relect);
+	var _Relect2 = _interopRequireDefault(_Relect);
 
 	__webpack_require__(166);
 
@@ -77,20 +77,27 @@
 	var App = (function (_React$Component) {
 	    _inherits(App, _React$Component);
 
-	    function App() {
-	        var _Object$getPrototypeO;
-
-	        var _temp, _this, _ret;
-
+	    function App(props) {
 	        _classCallCheck(this, App);
 
-	        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	            args[_key] = arguments[_key];
-	        }
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(App).call(this, props));
 
-	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(App)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.handleChange = function (val, text) {
-	            console.log('val: ', val, ', text: ', text);
-	        }, _temp), _possibleConstructorReturn(_this, _ret);
+	        _this.handleChange = function (chosen) {
+	            _this.setState({ chosen: chosen });
+	        };
+
+	        _this.clear = function () {
+	            _this.setState({ chosen: null });
+	        };
+
+	        _this.selectFirstOption = function () {
+	            _this.setState({ chosen: 0 });
+	        };
+
+	        _this.state = {
+	            chosen: null
+	        };
+	        return _this;
 	    }
 
 	    _createClass(App, [{
@@ -112,11 +119,25 @@
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'wrapper' },
-	                    _react2.default.createElement(_relect2.default, { value: 10,
+	                    _react2.default.createElement(_Relect2.default, { chosen: this.state.chosen,
 	                        options: arrayOptions,
 	                        placeholder: 'placeholder',
 	                        onChange: this.handleChange
-	                    })
+	                    }),
+	                    _react2.default.createElement(
+	                        'div',
+	                        null,
+	                        _react2.default.createElement(
+	                            'button',
+	                            { onClick: this.clear },
+	                            'clear'
+	                        ),
+	                        _react2.default.createElement(
+	                            'button',
+	                            { onClick: this.selectFirstOption },
+	                            'select the first option'
+	                        )
+	                    )
 	                )
 	            );
 	        }
@@ -19792,13 +19813,13 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _menu = __webpack_require__(160);
+	var _Menu = __webpack_require__(160);
 
-	var _menu2 = _interopRequireDefault(_menu);
+	var _Menu2 = _interopRequireDefault(_Menu);
 
-	var _box = __webpack_require__(161);
+	var _Box = __webpack_require__(161);
 
-	var _box2 = _interopRequireDefault(_box);
+	var _Box2 = _interopRequireDefault(_Box);
 
 	__webpack_require__(162);
 
@@ -19827,25 +19848,21 @@
 	        }
 
 	        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(Relect)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.state = {
-	            chosen: null, // index of chosen option
 	            focused: null, // index of focused option
 	            showMenu: false // whether show option
 	        }, _this.toggleMenu = function () {
 	            _this.setState({ showMenu: !_this.state.showMenu });
 	        }, _this.handleChoose = function (index) {
-	            var item = _this.props.options[index];
-	            _this.props.onChange(item.val || item, item.text || item);
+	            _this.props.onChange(index);
 	            _this.setState({
-	                chosen: index,
 	                showMenu: false
 	            });
 	        }, _this.handleClear = function (event) {
 	            event.stopPropagation();
 	            _this.setState({
-	                chosen: null,
 	                showMenu: false
 	            });
-	            _this.props.onChange(null, null);
+	            _this.props.onChange(null);
 	        }, _this.handleBlur = function () {
 	            _this.setState({ showMenu: false });
 	        }, _this.handleKeyDown = function (event) {
@@ -19894,29 +19911,26 @@
 	            // calc offset
 	            // displays up to 8 options in the same time
 	            var length = _this.props.options.length;
-	            if (length <= 8) {
-	                return;
-	            }
+	            if (length > 8) {
+	                var height = _this.props.optionHeight;
+	                var current = _this.menuDOM.scrollTop;
+	                var max = Math.min((length - 8) * height, focused * height);
+	                var min = Math.max(0, (focused - 7) * height);
 
-	            var height = _this.props.optionHeight;
-	            var max = Math.min((length - 8) * height, focused * height);
-	            var min = Math.max(0, (focused - 7) * height);
-	            var current = _this.menuDOM.scrollTop;
-
-	            if (current > max) {
-	                _this.menuDOM.scrollTop = max;
-	            } else if (current < min) {
-	                _this.menuDOM.scrollTop = min;
+	                if (current > max) {
+	                    _this.menuDOM.scrollTop = max;
+	                } else if (current < min) {
+	                    _this.menuDOM.scrollTop = min;
+	                }
 	            }
 	        }, _this.renderBox = function () {
-	            return _react2.default.createElement(_box2.default, _extends({}, _this.props, {
-	                chosen: _this.state.chosen,
+	            return _react2.default.createElement(_Box2.default, _extends({}, _this.props, {
 	                onClick: _this.toggleMenu,
 	                showMenu: _this.state.showMenu,
 	                handleClear: _this.handleClear
 	            }));
 	        }, _this.renderOptions = function () {
-	            return _react2.default.createElement(_menu2.default, _extends({ ref: 'menu'
+	            return _react2.default.createElement(_Menu2.default, _extends({ ref: 'menu'
 	            }, _this.props, {
 	                focused: _this.state.focused,
 	                showMenu: _this.state.showMenu,
@@ -19953,6 +19967,7 @@
 	Relect.propTypes = {
 	    width: _react.PropTypes.number,
 	    height: _react.PropTypes.number,
+	    chosen: _react.PropTypes.any,
 	    options: _react.PropTypes.array,
 	    placeholder: _react.PropTypes.string,
 	    optionHeight: _react.PropTypes.number
@@ -20044,7 +20059,7 @@
 /* 161 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
 
@@ -20074,30 +20089,32 @@
 	    }
 
 	    _createClass(Box, [{
-	        key: "renderContent",
+	        key: 'renderContent',
 	        value: function renderContent(props) {
-	            if (props.chosen === null) {
+	            var chosen = props.chosen;
+	            var options = props.options;
+
+	            if (typeof chosen === 'number' && options[chosen] !== undefined) {
 	                return _react2.default.createElement(
-	                    "span",
-	                    { className: "relect-placeholder" },
-	                    props.placeholder
+	                    'div',
+	                    null,
+	                    _react2.default.createElement(
+	                        'span',
+	                        null,
+	                        options[chosen]
+	                    ),
+	                    _react2.default.createElement('span', { className: 'relect-clear', onClick: props.handleClear })
 	                );
 	            } else {
-	                var chosenOption = props.options[props.chosen];
 	                return _react2.default.createElement(
-	                    "span",
-	                    { className: "relect-value" },
-	                    chosenOption.text || chosenOption
-	                );
+	                    'span',
+	                    { className: 'relect-placeholder' },
+	                    props.placeholder
+	                );;
 	            }
 	        }
 	    }, {
-	        key: "renderClear",
-	        value: function renderClear(props) {
-	            return props.chosen === null ? null : _react2.default.createElement("span", { className: "relect-clear", onClick: props.handleClear });
-	        }
-	    }, {
-	        key: "render",
+	        key: 'render',
 	        value: function render() {
 
 	            var props = this.props;
@@ -20107,11 +20124,10 @@
 	            };
 
 	            return _react2.default.createElement(
-	                "div",
-	                { className: "relect-box", style: style, onClick: props.onClick },
+	                'div',
+	                { className: 'relect-box', style: style, onClick: props.onClick },
 	                this.renderContent(props),
-	                this.renderClear(props),
-	                _react2.default.createElement("span", { className: "relect-arrow" })
+	                _react2.default.createElement('span', { className: 'relect-arrow' })
 	            );
 	        }
 	    }]);
@@ -20156,7 +20172,7 @@
 
 
 	// module
-	exports.push([module.id, "/* -- color config -- */\n/* -- relect container -- */\n.relect {\n  display: inline-block;\n  position: relative;\n  text-align: left;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none; }\n  .relect:hover .relect-box {\n    border-color: #B9B9B9; }\n  .relect:hover .relect-option {\n    border-top-color: #B9B9B9; }\n  .relect:focus {\n    outline: none; }\n    .relect:focus .relect-box {\n      border-color: #03A9F4; }\n    .relect:focus .relect-option {\n      border-top-color: #03A9F4; }\n\n/* -- box -- */\n.relect-box {\n  display: inline-block;\n  cursor: pointer;\n  padding: 0 10px;\n  background: #fff;\n  box-sizing: border-box;\n  border: 1px solid #D9D9D9;\n  -webkit-transition: border-color .1s;\n  transition: border-color .1s; }\n\n.relect-placeholder {\n  color: #999; }\n\n.relect-value {\n  color: #333; }\n\n/* -- option -- */\n.relect-option {\n  position: absolute;\n  left: 0;\n  margin: 0;\n  padding: 0;\n  z-index: 10;\n  list-style: none;\n  background: #fff;\n  overflow-y: auto;\n  box-sizing: border-box;\n  border: 1px solid #D9D9D9;\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); }\n  .relect-option li {\n    cursor: pointer;\n    padding: 0 10px; }\n\n.relect-focused-option {\n  color: #fff;\n  background: #03A9F4; }\n\n/* -- arrow -- */\n.relect-arrow {\n  position: absolute;\n  top: 50%;\n  right: 15px;\n  width: 0;\n  height: 0;\n  z-index: 1;\n  font-size: 0;\n  overflow: hidden;\n  margin-top: -3px;\n  border: solid 6px;\n  border-color: #B9B9B9 transparent transparent; }\n  .relect-arrow:hover {\n    border-color: #A0A0A0 transparent transparent; }\n\n/* -- clear -- */\n.relect-clear {\n  position: absolute;\n  cursor: pointer;\n  top: 50%;\n  right: 35px;\n  width: 12px;\n  height: 12px;\n  margin-top: -6px; }\n  .relect-clear:before, .relect-clear:after {\n    position: absolute;\n    content: '';\n    top: 50%;\n    left: 0;\n    width: 100%;\n    height: 2px;\n    margin-top: -1px;\n    border-radius: 100%;\n    background: #B9B9B9;\n    -webkit-transition: background .2s;\n    transition: background .2s; }\n  .relect-clear:before {\n    -webkit-transform: rotate(45deg);\n            transform: rotate(45deg); }\n  .relect-clear:after {\n    -webkit-transform: rotate(-45deg);\n            transform: rotate(-45deg); }\n  .relect-clear:hover:before, .relect-clear:hover:after {\n    background: #FF7D7D; }\n", ""]);
+	exports.push([module.id, "/* -- color config -- */\n/* -- relect container -- */\n.relect {\n  display: inline-block;\n  position: relative;\n  text-align: left;\n  -webkit-user-select: none;\n     -moz-user-select: none;\n      -ms-user-select: none;\n          user-select: none; }\n  .relect:hover .relect-box {\n    border-color: #B9B9B9; }\n  .relect:hover .relect-option {\n    border-top-color: #B9B9B9; }\n  .relect:focus {\n    outline: none; }\n    .relect:focus .relect-box {\n      border-color: #03A9F4; }\n    .relect:focus .relect-option {\n      border-top-color: #03A9F4; }\n\n/* -- box -- */\n.relect-box {\n  display: inline-block;\n  cursor: pointer;\n  padding: 0 10px;\n  background: #fff;\n  box-sizing: border-box;\n  border: 1px solid #D9D9D9;\n  -webkit-transition: border-color .1s;\n  transition: border-color .1s; }\n\n.relect-placeholder {\n  color: #999; }\n\n/* -- option -- */\n.relect-option {\n  position: absolute;\n  left: 0;\n  margin: 0;\n  padding: 0;\n  z-index: 10;\n  list-style: none;\n  background: #fff;\n  overflow-y: auto;\n  box-sizing: border-box;\n  border: 1px solid #D9D9D9;\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2); }\n  .relect-option li {\n    cursor: pointer;\n    padding: 0 10px; }\n\n.relect-focused-option {\n  color: #fff;\n  background: #03A9F4; }\n\n/* -- arrow -- */\n.relect-arrow {\n  position: absolute;\n  top: 50%;\n  right: 15px;\n  width: 0;\n  height: 0;\n  z-index: 1;\n  font-size: 0;\n  overflow: hidden;\n  margin-top: -3px;\n  border: solid 6px;\n  border-color: #B9B9B9 transparent transparent; }\n  .relect-arrow:hover {\n    border-color: #A0A0A0 transparent transparent; }\n\n/* -- clear -- */\n.relect-clear {\n  position: absolute;\n  cursor: pointer;\n  top: 50%;\n  right: 35px;\n  width: 12px;\n  height: 12px;\n  margin-top: -6px; }\n  .relect-clear:before, .relect-clear:after {\n    position: absolute;\n    content: '';\n    top: 50%;\n    left: 0;\n    width: 100%;\n    height: 2px;\n    margin-top: -1px;\n    border-radius: 100%;\n    background: #B9B9B9;\n    -webkit-transition: background .2s;\n    transition: background .2s; }\n  .relect-clear:before {\n    -webkit-transform: rotate(45deg);\n            transform: rotate(45deg); }\n  .relect-clear:after {\n    -webkit-transform: rotate(-45deg);\n            transform: rotate(-45deg); }\n  .relect-clear:hover:before, .relect-clear:hover:after {\n    background: #FF7D7D; }\n", ""]);
 
 	// exports
 
