@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Relect   from '../../src/relect';
 import './index.scss';
 
-const options = [
+const objectOptions = [
     { val: 0, text: 'Jon Snow' },
     { val: 1, text: 'Ned Stark' },
     { val: 2, text: 'Tywin' },
@@ -19,6 +19,8 @@ const options = [
     { val: 12, text: 'Melisandre' }
 ];
 
+const arrayOptions = ['one', 'two', 'three', 'four', 'five', 'six'];
+
 class App extends React.Component {
 
     handleChange = (val, text) => {
@@ -31,10 +33,10 @@ class App extends React.Component {
                 <h1 className="title">Relect</h1>
                 <h3 className="intro">A Tiny React Single Select Component.</h3>
                 <div className="wrapper">
-                    <Relect
-                        options={options}
-                        placeholder={'relect something'}
-                        onChange={this.handleChange}
+                    <Relect value={10}
+                            options={arrayOptions}
+                            placeholder={'placeholder'}
+                            onChange={this.handleChange}
                     />
                 </div>
             </div>

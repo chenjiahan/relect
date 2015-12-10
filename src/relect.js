@@ -37,23 +37,22 @@ class Relect extends React.Component {
     }
 
     toggleMenu = () => {
-        const showMenu = !this.state.showMenu;
-        this.setState({ showMenu });
+        this.setState({ showMenu: !this.state.showMenu });
     };
 
     handleChoose = index => {
         let item = this.props.options[index];
-        this.props.onChange(item.val, item.text);
+        this.props.onChange(item.val || item, item.text || item);
         this.setState({
-            chosen: index,
-            showMenu: false
+            chosen   : index,
+            showMenu : false
         });
     };
 
     handleClear = (event) => {
         event.stopPropagation();
         this.setState({
-            chosen     : null,
+            chosen   : null,
             showMenu : false
         });
         this.props.onChange(null, null);
@@ -64,20 +63,17 @@ class Relect extends React.Component {
     };
 
     handleKeyDown = event => {
-        event.preventDefault();
-
         switch (event.which) {
             case 8 : // Delete
                 this.handleClear(event);
                 break;
-            case 27: // ESC
+            case 27: // Esc
                 this.setState({ showMenu: false });
                 break;
             case 13: // Enter
             case 32: // Space
-                let { showMenu, focused } = this.state;
-                if (showMenu && focused !== null) {
-                    this.handleChoose(focused);
+                if (this.state.showMenu && this.state.focused !== null) {
+                    this.handleChoose(this.state.focused);
                 } else {
                     this.toggleMenu();
                 }
@@ -88,7 +84,10 @@ class Relect extends React.Component {
             case 40: // Down
                 this.moveFocusedOption(1);
                 break;
+            default:
+                return;
         }
+        event.preventDefault();
     };
 
     moveFocusedOption = move => {
@@ -128,20 +127,19 @@ class Relect extends React.Component {
         return (
             <Box {...this.props}
                  chosen={this.state.chosen}
-                 showMenu={this.state.showMenu}
                  onClick={this.toggleMenu}
+                 showMenu={this.state.showMenu}
                  handleClear={this.handleClear}
             />
         )
     };
 
     renderOptions = () => {
-        const { showMenu, focused } = this.state;
         return (
             <Menu ref="menu"
                   {...this.props}
-                  focused={focused}
-                  showMenu={showMenu}
+                  focused={this.state.focused}
+                  showMenu={this.state.showMenu}
                   focusOption={this.focusOption}
                   handleChoose={this.handleChoose}
             />

@@ -23,7 +23,7 @@ class Menu extends React.Component {
                     className={className}
                     onMouseEnter={handleMouseEnter}
                 >
-                    {item.text}
+                    {item.text || item}
                 </li>
             )
         });

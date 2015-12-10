@@ -6,7 +6,8 @@ class Box extends React.Component {
         if (props.chosen === null) {
             return <span className="relect-placeholder">{props.placeholder}</span>;
         } else {
-            return <span className="relect-value">{props.options[props.chosen].text}</span>;
+            let chosenOption = props.options[props.chosen];
+            return <span className="relect-value">{chosenOption.text || chosenOption}</span>;
         }
     };
 

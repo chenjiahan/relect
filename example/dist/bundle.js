@@ -70,7 +70,9 @@
 
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-	var options = [{ val: 0, text: 'Jon Snow' }, { val: 1, text: 'Ned Stark' }, { val: 2, text: 'Tywin' }, { val: 3, text: 'Robb' }, { val: 4, text: 'Sansa' }, { val: 5, text: 'Arya' }, { val: 6, text: 'Bran' }, { val: 7, text: 'Cersei' }, { val: 8, text: 'Jaime' }, { val: 9, text: 'Joffrey' }, { val: 10, text: 'Tyrion' }, { val: 11, text: 'Stannis' }, { val: 12, text: 'Melisandre' }];
+	var objectOptions = [{ val: 0, text: 'Jon Snow' }, { val: 1, text: 'Ned Stark' }, { val: 2, text: 'Tywin' }, { val: 3, text: 'Robb' }, { val: 4, text: 'Sansa' }, { val: 5, text: 'Arya' }, { val: 6, text: 'Bran' }, { val: 7, text: 'Cersei' }, { val: 8, text: 'Jaime' }, { val: 9, text: 'Joffrey' }, { val: 10, text: 'Tyrion' }, { val: 11, text: 'Stannis' }, { val: 12, text: 'Melisandre' }];
+
+	var arrayOptions = ['one', 'two', 'three', 'four', 'five', 'six'];
 
 	var App = (function (_React$Component) {
 	    _inherits(App, _React$Component);
@@ -110,9 +112,9 @@
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'wrapper' },
-	                    _react2.default.createElement(_relect2.default, {
-	                        options: options,
-	                        placeholder: 'relect something',
+	                    _react2.default.createElement(_relect2.default, { value: 10,
+	                        options: arrayOptions,
+	                        placeholder: 'placeholder',
 	                        onChange: this.handleChange
 	                    })
 	                )
@@ -19790,7 +19792,7 @@
 
 	var _reactDom2 = _interopRequireDefault(_reactDom);
 
-	var _menu = __webpack_require__(168);
+	var _menu = __webpack_require__(160);
 
 	var _menu2 = _interopRequireDefault(_menu);
 
@@ -19829,11 +19831,10 @@
 	            focused: null, // index of focused option
 	            showMenu: false // whether show option
 	        }, _this.toggleMenu = function () {
-	            var showMenu = !_this.state.showMenu;
-	            _this.setState({ showMenu: showMenu });
+	            _this.setState({ showMenu: !_this.state.showMenu });
 	        }, _this.handleChoose = function (index) {
 	            var item = _this.props.options[index];
-	            _this.props.onChange(item.val, item.text);
+	            _this.props.onChange(item.val || item, item.text || item);
 	            _this.setState({
 	                chosen: index,
 	                showMenu: false
@@ -19848,26 +19849,20 @@
 	        }, _this.handleBlur = function () {
 	            _this.setState({ showMenu: false });
 	        }, _this.handleKeyDown = function (event) {
-	            event.preventDefault();
-
 	            switch (event.which) {
 	                case 8:
 	                    // Delete
 	                    _this.handleClear(event);
 	                    break;
 	                case 27:
-	                    // ESC
+	                    // Esc
 	                    _this.setState({ showMenu: false });
 	                    break;
 	                case 13: // Enter
 	                case 32:
 	                    // Space
-	                    var _this$state = _this.state;
-	                    var showMenu = _this$state.showMenu;
-	                    var focused = _this$state.focused;
-
-	                    if (showMenu && focused !== null) {
-	                        _this.handleChoose(focused);
+	                    if (_this.state.showMenu && _this.state.focused !== null) {
+	                        _this.handleChoose(_this.state.focused);
 	                    } else {
 	                        _this.toggleMenu();
 	                    }
@@ -19880,7 +19875,10 @@
 	                    // Down
 	                    _this.moveFocusedOption(1);
 	                    break;
+	                default:
+	                    return;
 	            }
+	            event.preventDefault();
 	        }, _this.moveFocusedOption = function (move) {
 	            if (!_this.state.showMenu) {
 	                _this.setState({ showMenu: true });
@@ -19913,19 +19911,15 @@
 	        }, _this.renderBox = function () {
 	            return _react2.default.createElement(_box2.default, _extends({}, _this.props, {
 	                chosen: _this.state.chosen,
-	                showMenu: _this.state.showMenu,
 	                onClick: _this.toggleMenu,
+	                showMenu: _this.state.showMenu,
 	                handleClear: _this.handleClear
 	            }));
 	        }, _this.renderOptions = function () {
-	            var _this$state2 = _this.state;
-	            var showMenu = _this$state2.showMenu;
-	            var focused = _this$state2.focused;
-
 	            return _react2.default.createElement(_menu2.default, _extends({ ref: 'menu'
 	            }, _this.props, {
-	                focused: focused,
-	                showMenu: showMenu,
+	                focused: _this.state.focused,
+	                showMenu: _this.state.showMenu,
 	                focusOption: _this.focusOption,
 	                handleChoose: _this.handleChoose
 	            }));
@@ -19973,7 +19967,80 @@
 	exports.default = Relect;
 
 /***/ },
-/* 160 */,
+/* 160 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Menu = (function (_React$Component) {
+	    _inherits(Menu, _React$Component);
+
+	    function Menu() {
+	        _classCallCheck(this, Menu);
+
+	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Menu).apply(this, arguments));
+	    }
+
+	    _createClass(Menu, [{
+	        key: 'render',
+	        value: function render() {
+
+	            var props = this.props;
+	            var style = {
+	                top: props.height - 1,
+	                width: props.width,
+	                display: props.showMenu ? '' : 'none',
+	                lineHeight: props.optionHeight + 'px',
+	                maxHeight: props.optionHeight * 8 + 2
+	            };
+
+	            var options = props.options.map(function (item, index) {
+	                var handleClick = props.handleChoose.bind(null, index);
+	                var handleMouseEnter = props.focusOption.bind(null, index);
+	                var className = index === props.focused ? 'relect-focused-option' : '';
+	                return _react2.default.createElement(
+	                    'li',
+	                    { key: index,
+	                        onClick: handleClick,
+	                        className: className,
+	                        onMouseEnter: handleMouseEnter
+	                    },
+	                    item.text || item
+	                );
+	            });
+
+	            return _react2.default.createElement(
+	                'ul',
+	                { className: 'relect-option', style: style },
+	                options
+	            );
+	        }
+	    }]);
+
+	    return Menu;
+	})(_react2.default.Component);
+
+	exports.default = Menu;
+
+/***/ },
 /* 161 */
 /***/ function(module, exports, __webpack_require__) {
 
@@ -20016,10 +20083,11 @@
 	                    props.placeholder
 	                );
 	            } else {
+	                var chosenOption = props.options[props.chosen];
 	                return _react2.default.createElement(
 	                    "span",
 	                    { className: "relect-value" },
-	                    props.options[props.chosen].text
+	                    chosenOption.text || chosenOption
 	                );
 	            }
 	        }
@@ -20441,80 +20509,6 @@
 
 	// exports
 
-
-/***/ },
-/* 168 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Menu = (function (_React$Component) {
-	    _inherits(Menu, _React$Component);
-
-	    function Menu() {
-	        _classCallCheck(this, Menu);
-
-	        return _possibleConstructorReturn(this, Object.getPrototypeOf(Menu).apply(this, arguments));
-	    }
-
-	    _createClass(Menu, [{
-	        key: 'render',
-	        value: function render() {
-
-	            var props = this.props;
-	            var style = {
-	                top: props.height - 1,
-	                width: props.width,
-	                display: props.showMenu ? '' : 'none',
-	                lineHeight: props.optionHeight + 'px',
-	                maxHeight: props.optionHeight * 8 + 2
-	            };
-
-	            var options = props.options.map(function (item, index) {
-	                var handleClick = props.handleChoose.bind(null, index);
-	                var handleMouseEnter = props.focusOption.bind(null, index);
-	                var className = index === props.focused ? 'relect-focused-option' : '';
-	                return _react2.default.createElement(
-	                    'li',
-	                    { key: index,
-	                        onClick: handleClick,
-	                        className: className,
-	                        onMouseEnter: handleMouseEnter
-	                    },
-	                    item.text
-	                );
-	            });
-
-	            return _react2.default.createElement(
-	                'ul',
-	                { className: 'relect-option', style: style },
-	                options
-	            );
-	        }
-	    }]);
-
-	    return Menu;
-	})(_react2.default.Component);
-
-	exports.default = Menu;
 
 /***/ }
 /******/ ]);
