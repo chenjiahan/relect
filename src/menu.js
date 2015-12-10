@@ -14,14 +14,12 @@ class Menu extends React.Component {
         };
 
         const options = props.options.map((item, index) => {
-            const handleClick = props.handleChoose.bind(null, index);
-            const handleMouseEnter = props.focusOption.bind(null, index);
             const className = index === props.focused ? 'relect-focused-option' : '';
             return (
                 <li key={index}
-                    onClick={handleClick}
                     className={className}
-                    onMouseEnter={handleMouseEnter}
+                    onClick={props.handleChoose.bind(null, index)}
+                    onMouseEnter={props.focusOption.bind(null, index)}
                 >
                     {item.text || item}
                 </li>

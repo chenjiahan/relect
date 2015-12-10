@@ -1,8 +1,8 @@
-module.exports = {
+module.exports = config = {
     entry: "./example/src/index.js",
     output: {
         path: "example/dist",
-        filename: "bundle.js"
+        filename: 'bundle.js'
     },
     module: {
         loaders: [
@@ -10,7 +10,7 @@ module.exports = {
                 test: /\.js$/,
                 loader: "babel",
                 query: {
-                    presets: ['es2015', 'stage-0', 'react'],
+                    presets: ['es2015', 'react'],
                 }
             },
             { test: /\.css$/, loader: "style!css" },

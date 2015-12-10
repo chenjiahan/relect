@@ -29,3 +29,22 @@
         font-size: 20px;
     }
 }
+.btn {
+    cursor: pointer;
+    display: block;
+    width: 300px;
+    color: #586481;
+    font-size: 14px;
+    background: #fff;
+    line-height: 30px;
+    margin: 20px auto 0;
+    border: 1px solid #586481;
+    transition: .2s background, .2s color;
+    &:hover {
+        color: #fff;
+        background: #586481;
+    }
+    &:focus {
+        outline: none;
+    }
+}

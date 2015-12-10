@@ -6,48 +6,60 @@ import React, { PropTypes } from 'react';
 import ReactDOM from 'react-dom';
 import Menu     from './Menu';
 import Box      from './Box';
-import './relect.scss';
+import './relect.css';
+
+const propTypes = {
+    width        : PropTypes.number,
+    height       : PropTypes.number,
+    chosen       : PropTypes.any,
+    options      : PropTypes.array,
+    placeholder  : PropTypes.string,
+    optionHeight : PropTypes.number
+};
+
+const defaultProps = {
+    width        : 300,
+    height       : 40,
+    options      : [],
+    placeholder  : '',
+    optionHeight : 30
+};
 
 class Relect extends React.Component {
 
-    static propTypes = {
-        width        : PropTypes.number,
-        height       : PropTypes.number,
-        chosen       : PropTypes.any,
-        options      : PropTypes.array,
-        placeholder  : PropTypes.string,
-        optionHeight : PropTypes.number
-    };
+    constructor(props) {
+        super(props);
 
-    static defaultProps = {
-        width        : 300,
-        height       : 40,
-        options      : [],
-        placeholder  : '',
-        optionHeight : 30
-    };
+        this.state = {
+            focused  : null,  // index of focused option
+            showMenu : false  // whether show option
+        };
 
-    state = {
-        focused  : null,  // index of focused option
-        showMenu : false  // whether show option
-    };
+        this.toggleMenu        = this.toggleMenu.bind(this);
+        this.handleBlur        = this.handleBlur.bind(this);
+        this.handleClear       = this.handleClear.bind(this);
+        this.handleChoose      = this.handleChoose.bind(this);
+        this.handleKeyDown     = this.handleKeyDown.bind(this);
+        this.focusOption       = this.focusOption.bind(this);
+        this.moveFocusedOption = this.moveFocusedOption.bind(this);
+    }
 
     componentDidMount() {
         this.menuDOM = ReactDOM.findDOMNode(this.refs.menu);
     }
 
-    toggleMenu = () => {
+    toggleMenu() {
         this.setState({ showMenu: !this.state.showMenu });
     };
 
-    handleChoose = index => {
+    handleChoose(index) {
         this.props.onChange(index);
         this.setState({
             showMenu : false
         });
     };
 
-    handleClear = event => {
+    handleClear(event) {
         event.stopPropagation();
         this.setState({
             showMenu : false
@@ -55,11 +67,11 @@ class Relect extends React.Component {
         this.props.onChange(null);
     };
 
-    handleBlur = () => {
+    handleBlur() {
         this.setState({ showMenu: false })
     };
 
-    handleKeyDown = event => {
+    handleKeyDown(event) {
         switch (event.which) {
             case 8 : // Delete
                 this.handleClear(event);
@@ -87,7 +99,7 @@ class Relect extends React.Component {
         event.preventDefault();
     };
 
-    moveFocusedOption = move => {
+    moveFocusedOption(move) {
         if (!this.state.showMenu) {
             this.setState({ showMenu: true });
             return;
@@ -98,7 +110,7 @@ class Relect extends React.Component {
         this.focusOption(focused);
     };
 
-    focusOption = focused => {
+    focusOption(focused) {
         this.setState({ focused });
 
         // calc offset
@@ -118,28 +130,6 @@ class Relect extends React.Component {
         }
     };
 
-    renderBox = () => {
-        return (
-            <Box {...this.props}
-                 onClick={this.toggleMenu}
-                 showMenu={this.state.showMenu}
-                 handleClear={this.handleClear}
-            />
-        )
-    };
-
-    renderOptions = () => {
-        return (
-            <Menu ref="menu"
-                  {...this.props}
-                  focused={this.state.focused}
-                  showMenu={this.state.showMenu}
-                  focusOption={this.focusOption}
-                  handleChoose={this.handleChoose}
-            />
-        )
-    };
-
     render() {
         return (
             <div tabIndex="0"
@@ -147,11 +137,24 @@ class Relect extends React.Component {
                  onBlur={this.handleBlur}
                  onKeyDown={this.handleKeyDown}
             >
-                {this.renderBox()}
-                {this.renderOptions()}
+                <Box {...this.props}
+                     onClick={this.toggleMenu}
+                     showMenu={this.state.showMenu}
+                     handleClear={this.handleClear}
+                />
+                <Menu ref="menu"
+                      {...this.props}
+                      focused={this.state.focused}
+                      showMenu={this.state.showMenu}
+                      focusOption={this.focusOption}
+                      handleChoose={this.handleChoose}
+                />
             </div>
         )
     }
 }
+
+Relect.propTypes = propTypes;
+Relect.defaultProps = defaultProps;
 
 export default Relect;

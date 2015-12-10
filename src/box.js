@@ -3,17 +3,18 @@ import React from 'react';
 class Box extends React.Component {
 
     renderContent(props) {
-        if (props.chosen === null) {
-            return <span className="relect-placeholder">{props.placeholder}</span>;
+        const { chosen, options } = props;
+        if (typeof chosen === 'number' && options[chosen] !== undefined) {
+            return (
+                <div>
+                    <span>{options[chosen]}</span>
+                    <span className="relect-clear" onClick={props.handleClear} />
+                </div>
+            )
         } else {
-            let chosenOption = props.options[props.chosen];
-            return <span className="relect-value">{chosenOption.text || chosenOption}</span>;
+            return <span className="relect-placeholder">{props.placeholder}</span>
         }
-    };
-
-    renderClear(props) {
-        return props.chosen === null ? null : <span className="relect-clear" onClick={props.handleClear} />;
-    };
+    }
 
     render() {
 
@@ -26,7 +27,6 @@ class Box extends React.Component {
         return (
             <div className="relect-box" style={style} onClick={props.onClick}>
                 {this.renderContent(props)}
-                {this.renderClear(props)}
                 <span className="relect-arrow" />
             </div>
         )

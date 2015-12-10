@@ -27,20 +27,25 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            chosen: null
+            chosen: null,
+            disabled: false
         }
     }
 
-    handleChange = chosen => {
+    handleChange(chosen) {
         this.setState({ chosen });
     };
 
-    clear = () => {
+    clear() {
         this.setState({ chosen: null });
     }
 
-    selectFirstOption = () => {
+    selectFirstOption() {
         this.setState({ chosen: 0 });
+    }
+
+    setDisable() {
+        this.setState({ disabled: !this.state.disabled });
     }
 
     render() {
@@ -51,12 +56,14 @@ class App extends React.Component {
                 <div className="wrapper">
                     <Relect chosen={this.state.chosen}
                             options={arrayOptions}
+                            disabled={this.state.disabled}
                             placeholder={'placeholder'}
-                            onChange={this.handleChange}
+                            onChange={this.handleChange.bind(this)}
                     />
                     <div>
-                        <button onClick={this.clear}>clear</button>
-                        <button onClick={this.selectFirstOption}>select the first option</button>
+                        <button className="btn" onClick={this.selectFirstOption.bind(this)}>select the first option</button>
+                        <button className="btn" onClick={this.clear.bind(this)}>clear value</button>
+                        <button className="btn" onClick={this.setDisable.bind(this)}>set disable</button>
                     </div>
                 </div>
             </div>
