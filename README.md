@@ -45,5 +45,6 @@ width|number|300|width of select
 height|number|40|height of select
 options|array|/|options
 chosen|number|/|index of chosen option
+tabIndex|number|-1|tab order
 placeholder|string|/|placeholder text
 optionHeight|number|30|height of option

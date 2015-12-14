@@ -13,6 +13,7 @@ const propTypes = {
     height       : PropTypes.number,
     chosen       : PropTypes.any,
     options      : PropTypes.array,
+    tabIndex     : PropTypes.number,
     placeholder  : PropTypes.string,
     optionHeight : PropTypes.number
 };
@@ -21,6 +22,7 @@ const defaultProps = {
     width        : 300,
     height       : 40,
     options      : [],
+    tabIndex     : -1,
     placeholder  : '',
     optionHeight : 30
 };
@@ -59,8 +61,8 @@ class Relect extends React.Component {
         });
     };
 
-    handleClear(event) {
-        event.stopPropagation();
+    handleClear(e) {
+        e.stopPropagation();
         this.setState({
             showMenu : false
         });
@@ -71,10 +73,10 @@ class Relect extends React.Component {
         this.setState({ showMenu: false })
     };
 
-    handleKeyDown(event) {
-        switch (event.which) {
+    handleKeyDown(e) {
+        switch (e.which) {
             case 8 : // Delete
-                this.handleClear(event);
+                this.handleClear(e);
                 break;
             case 27: // Esc
                 this.setState({ showMenu: false });
@@ -96,7 +98,7 @@ class Relect extends React.Component {
             default:
                 return;
         }
-        event.preventDefault();
+        e.preventDefault();
     };
 
     moveFocusedOption(move) {
@@ -131,21 +133,32 @@ class Relect extends React.Component {
     };
 
     render() {
+
+        const props = this.props;
+        const { showMenu, focused } = this.state;
+        const tabIndex = props.disabled ? 99999 : props.tabIndex;
+
+        const style = {
+            width      : props.width,
+            lineHeight : props.height - 2 + 'px'
+        };
+
         return (
-            <div tabIndex="0"
+            <div style={style}
                  className="relect"
+                 tabIndex={tabIndex}
                  onBlur={this.handleBlur}
                  onKeyDown={this.handleKeyDown}
             >
-                <Box {...this.props}
+                <Box {...props}
+                     showMenu={showMenu}
                      onClick={this.toggleMenu}
-                     showMenu={this.state.showMenu}
                      handleClear={this.handleClear}
                 />
                 <Menu ref="menu"
-                      {...this.props}
-                      focused={this.state.focused}
-                      showMenu={this.state.showMenu}
+                      {...props}
+                      focused={focused}
+                      showMenu={showMenu}
                       focusOption={this.focusOption}
                       handleChoose={this.handleChoose}
                 />

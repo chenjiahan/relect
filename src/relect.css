@@ -12,6 +12,9 @@
 .relect:hover .relect-box {
     border-color: #B9B9B9;
 }
+.relect:hover .relect-box-disabled {
+    border-color: #D9D9D9;
+}
 .relect:hover .relect-option {
     border-top-color: #B9B9B9;
 }
@@ -28,6 +31,7 @@
 /* -- box && option -- */
 .relect-box,
 .relect-option {
+    width: inherit;
     background: #fff;
     -webkit-box-sizing: border-box;
        -moz-box-sizing: border-box;
@@ -41,6 +45,11 @@
     border: 1px solid #D9D9D9;
     -webkit-transition: border-color .1s;
             transition: border-color .1s;
+}
+.relect-box-disabled {
+    color: #999;
+    cursor: default;
+    background: #f2f2f2;
 }
 .relect-placeholder {
     color: #999;
@@ -82,6 +91,9 @@
 }
 .relect-arrow:hover {
     border-color: #A0A0A0 transparent transparent;
+}
+.relect-box-disabled .relect-arrow:hover {
+    border-color: #B9B9B9 transparent transparent;
 }
 
 /* -- clear -- */

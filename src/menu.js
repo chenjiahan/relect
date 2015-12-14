@@ -7,8 +7,7 @@ class Menu extends React.Component {
         const props = this.props;
         const style = {
             top        : props.height - 1,
-            width      : props.width,
-            display    : props.showMenu ? '' : 'none',
+            display    : props.showMenu && !props.disabled ? '' : 'none',
             lineHeight : props.optionHeight + 'px',
             maxHeight  : props.optionHeight * 8 + 2
         };

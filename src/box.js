@@ -7,7 +7,7 @@ class Box extends React.Component {
         if (typeof chosen === 'number' && options[chosen] !== undefined) {
             return (
                 <div>
-                    <span>{options[chosen]}</span>
+                    <span>{options[chosen].text || options[chosen]}</span>
                     <span className="relect-clear" onClick={props.handleClear} />
                 </div>
             )
@@ -17,15 +17,10 @@ class Box extends React.Component {
     }
 
     render() {
-
         const props = this.props;
-        const style = {
-            width      : props.width,
-            lineHeight : props.height - 2 + 'px'
-        };
-
+        const className = 'relect-box' + (props.disabled ? ' relect-box-disabled' : '');
         return (
-            <div className="relect-box" style={style} onClick={props.onClick}>
+            <div className={className} onClick={props.onClick}>
                 {this.renderContent(props)}
                 <span className="relect-arrow" />
             </div>

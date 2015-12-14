@@ -60,7 +60,7 @@
 
 	var _Relect2 = _interopRequireDefault(_Relect);
 
-	__webpack_require__(162);
+	__webpack_require__(166);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -19836,7 +19836,7 @@
 
 	var _Box2 = _interopRequireDefault(_Box);
 
-	__webpack_require__(168);
+	__webpack_require__(162);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -19853,6 +19853,7 @@
 	    height: _react.PropTypes.number,
 	    chosen: _react.PropTypes.any,
 	    options: _react.PropTypes.array,
+	    tabIndex: _react.PropTypes.number,
 	    placeholder: _react.PropTypes.string,
 	    optionHeight: _react.PropTypes.number
 	};
@@ -19861,6 +19862,7 @@
 	    width: 300,
 	    height: 40,
 	    options: [],
+	    tabIndex: -1,
 	    placeholder: '',
 	    optionHeight: 30
 	};
@@ -19908,8 +19910,8 @@
 	        }
 	    }, {
 	        key: 'handleClear',
-	        value: function handleClear(event) {
-	            event.stopPropagation();
+	        value: function handleClear(e) {
+	            e.stopPropagation();
 	            this.setState({
 	                showMenu: false
 	            });
@@ -19922,11 +19924,11 @@
 	        }
 	    }, {
 	        key: 'handleKeyDown',
-	        value: function handleKeyDown(event) {
-	            switch (event.which) {
+	        value: function handleKeyDown(e) {
+	            switch (e.which) {
 	                case 8:
 	                    // Delete
-	                    this.handleClear(event);
+	                    this.handleClear(e);
 	                    break;
 	                case 27:
 	                    // Esc
@@ -19952,7 +19954,7 @@
 	                default:
 	                    return;
 	            }
-	            event.preventDefault();
+	            e.preventDefault();
 	        }
 	    }, {
 	        key: 'moveFocusedOption',
@@ -19990,22 +19992,36 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
+
+	            var props = this.props;
+	            var _state = this.state;
+	            var showMenu = _state.showMenu;
+	            var focused = _state.focused;
+
+	            var tabIndex = props.disabled ? 99999 : props.tabIndex;
+
+	            var style = {
+	                width: props.width,
+	                lineHeight: props.height - 2 + 'px'
+	            };
+
 	            return _react2.default.createElement(
 	                'div',
-	                { tabIndex: '0',
+	                { style: style,
 	                    className: 'relect',
+	                    tabIndex: tabIndex,
 	                    onBlur: this.handleBlur,
 	                    onKeyDown: this.handleKeyDown
 	                },
-	                _react2.default.createElement(_Box2.default, _extends({}, this.props, {
+	                _react2.default.createElement(_Box2.default, _extends({}, props, {
+	                    showMenu: showMenu,
 	                    onClick: this.toggleMenu,
-	                    showMenu: this.state.showMenu,
 	                    handleClear: this.handleClear
 	                })),
 	                _react2.default.createElement(_Menu2.default, _extends({ ref: 'menu'
-	                }, this.props, {
-	                    focused: this.state.focused,
-	                    showMenu: this.state.showMenu,
+	                }, props, {
+	                    focused: focused,
+	                    showMenu: showMenu,
 	                    focusOption: this.focusOption,
 	                    handleChoose: this.handleChoose
 	                }))
@@ -20061,8 +20077,7 @@
 	            var props = this.props;
 	            var style = {
 	                top: props.height - 1,
-	                width: props.width,
-	                display: props.showMenu ? '' : 'none',
+	                display: props.showMenu && !props.disabled ? '' : 'none',
 	                lineHeight: props.optionHeight + 'px',
 	                maxHeight: props.optionHeight * 8 + 2
 	            };
@@ -20154,16 +20169,11 @@
 	    }, {
 	        key: 'render',
 	        value: function render() {
-
 	            var props = this.props;
-	            var style = {
-	                width: props.width,
-	                lineHeight: props.height - 2 + 'px'
-	            };
-
+	            var className = 'relect-box' + (props.disabled ? ' relect-box-disabled' : '');
 	            return _react2.default.createElement(
 	                'div',
-	                { className: 'relect-box', style: style, onClick: props.onClick },
+	                { className: className, onClick: props.onClick },
 	                this.renderContent(props),
 	                _react2.default.createElement('span', { className: 'relect-arrow' })
 	            );
@@ -20191,8 +20201,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/autoprefixer-loader/index.js!./../../node_modules/sass-loader/index.js!./index.scss", function() {
-				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/autoprefixer-loader/index.js!./../../node_modules/sass-loader/index.js!./index.scss");
+			module.hot.accept("!!./../node_modules/css-loader/index.js!./relect.css", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js!./relect.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -20210,7 +20220,7 @@
 
 
 	// module
-	exports.push([module.id, ".wrapper {\n  width: 600px;\n  height: 320px;\n  margin: 0 auto;\n  text-align: center;\n  padding-top: 30px;\n  box-sizing: border-box;\n  border-radius: 6px;\n  background: #fff;\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35); }\n\n.title,\n.intro {\n  color: #fff;\n  text-align: center;\n  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); }\n\n.title {\n  font-size: 70px;\n  margin: 0; }\n  @media (max-width: 600px) {\n    .title {\n      font-size: 40px; } }\n\n.intro {\n  font-size: 30px;\n  margin: 15px 10px 40px; }\n  @media (max-width: 600px) {\n    .intro {\n      font-size: 20px; } }\n\n.btn {\n  cursor: pointer;\n  display: block;\n  width: 300px;\n  color: #586481;\n  font-size: 14px;\n  background: #fff;\n  line-height: 30px;\n  margin: 20px auto 0;\n  border: 1px solid #586481;\n  -webkit-transition: .2s background, .2s color;\n  transition: .2s background, .2s color; }\n  .btn:hover {\n    color: #fff;\n    background: #586481; }\n  .btn:focus {\n    outline: none; }\n", ""]);
+	exports.push([module.id, "/* -- relect container -- */\n.relect {\n    cursor: pointer;\n    text-align: left;\n    position: relative;\n    display: inline-block;\n    -webkit-user-select: none;\n       -moz-user-select: none;\n        -ms-user-select: none;\n            user-select: none;\n}\n.relect:hover .relect-box {\n    border-color: #B9B9B9;\n}\n.relect:hover .relect-box-disabled {\n    border-color: #D9D9D9;\n}\n.relect:hover .relect-option {\n    border-top-color: #B9B9B9;\n}\n.relect:focus {\n    outline: none;\n}\n.relect:focus .relect-box {\n    border-color: #03A9F4;\n}\n.relect:focus .relect-option {\n    border-top-color: #03A9F4;\n}\n\n/* -- box && option -- */\n.relect-box,\n.relect-option {\n    width: inherit;\n    background: #fff;\n    -webkit-box-sizing: border-box;\n       -moz-box-sizing: border-box;\n            box-sizing: border-box;\n}\n\n/* -- box -- */\n.relect-box {\n    padding: 0 10px;\n    display: inline-block;\n    border: 1px solid #D9D9D9;\n    -webkit-transition: border-color .1s;\n            transition: border-color .1s;\n}\n.relect-box-disabled {\n    color: #999;\n    cursor: default;\n    background: #f2f2f2;\n}\n.relect-placeholder {\n    color: #999;\n}\n\n/* -- option -- */\n.relect-option {\n    position: absolute;\n    left: 0;\n    margin: 0;\n    padding: 0;\n    z-index: 10;\n    list-style: none;\n    overflow-y: auto;\n    border: 1px solid #D9D9D9;\n    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);\n}\n.relect-option li {\n    padding: 0 10px;\n}\n.relect-focused-option {\n    color: #fff;\n    background: #03A9F4;\n}\n\n/* -- arrow -- */\n.relect-arrow {\n    position: absolute;\n    top: 50%;\n    right: 15px;\n    width: 0;\n    height: 0;\n    z-index: 1;\n    font-size: 0;\n    overflow: hidden;\n    margin-top: -3px;\n    border: solid 6px;\n    border-color: #B9B9B9 transparent transparent;\n}\n.relect-arrow:hover {\n    border-color: #A0A0A0 transparent transparent;\n}\n.relect-box-disabled .relect-arrow:hover {\n    border-color: #B9B9B9 transparent transparent;\n}\n\n/* -- clear -- */\n.relect-clear {\n    position: absolute;\n    cursor: pointer;\n    top: 50%;\n    right: 35px;\n    width: 12px;\n    height: 12px;\n    margin-top: -6px;\n}\n.relect-clear:before,\n.relect-clear:after {\n    position: absolute;\n    content: '';\n    top: 50%;\n    left: 0;\n    width: 100%;\n    height: 2px;\n    margin-top: -1px;\n    border-radius: 100%;\n    background: #B9B9B9;\n    -webkit-transition: background .2s;\n            transition: background .2s;\n}\n.relect-clear:before {\n    -webkit-transform: rotate(45deg);\n            transform: rotate(45deg);\n}\n.relect-clear:after {\n    -webkit-transform: rotate(-45deg);\n            transform: rotate(-45deg);\n}\n.relect-clear:hover:before,\n.relect-clear:hover:after {\n    background: #FF7D7D;\n}\n", ""]);
 
 	// exports
 
@@ -20525,15 +20535,13 @@
 
 
 /***/ },
-/* 166 */,
-/* 167 */,
-/* 168 */
+/* 166 */
 /***/ function(module, exports, __webpack_require__) {
 
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(169);
+	var content = __webpack_require__(167);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
 	var update = __webpack_require__(165)(content, {});
@@ -20542,8 +20550,8 @@
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../node_modules/css-loader/index.js!./relect.css", function() {
-				var newContent = require("!!./../node_modules/css-loader/index.js!./relect.css");
+			module.hot.accept("!!./../../node_modules/css-loader/index.js!./../../node_modules/autoprefixer-loader/index.js!./../../node_modules/sass-loader/index.js!./index.scss", function() {
+				var newContent = require("!!./../../node_modules/css-loader/index.js!./../../node_modules/autoprefixer-loader/index.js!./../../node_modules/sass-loader/index.js!./index.scss");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -20553,7 +20561,7 @@
 	}
 
 /***/ },
-/* 169 */
+/* 167 */
 /***/ function(module, exports, __webpack_require__) {
 
 	exports = module.exports = __webpack_require__(164)();
@@ -20561,7 +20569,7 @@
 
 
 	// module
-	exports.push([module.id, "/* -- relect container -- */\n.relect {\n    cursor: pointer;\n    text-align: left;\n    position: relative;\n    display: inline-block;\n    -webkit-user-select: none;\n       -moz-user-select: none;\n        -ms-user-select: none;\n            user-select: none;\n}\n.relect:hover .relect-box {\n    border-color: #B9B9B9;\n}\n.relect:hover .relect-option {\n    border-top-color: #B9B9B9;\n}\n.relect:focus {\n    outline: none;\n}\n.relect:focus .relect-box {\n    border-color: #03A9F4;\n}\n.relect:focus .relect-option {\n    border-top-color: #03A9F4;\n}\n\n/* -- box && option -- */\n.relect-box,\n.relect-option {\n    background: #fff;\n    -webkit-box-sizing: border-box;\n       -moz-box-sizing: border-box;\n            box-sizing: border-box;\n}\n\n/* -- box -- */\n.relect-box {\n    padding: 0 10px;\n    display: inline-block;\n    border: 1px solid #D9D9D9;\n    -webkit-transition: border-color .1s;\n            transition: border-color .1s;\n}\n.relect-placeholder {\n    color: #999;\n}\n\n/* -- option -- */\n.relect-option {\n    position: absolute;\n    left: 0;\n    margin: 0;\n    padding: 0;\n    z-index: 10;\n    list-style: none;\n    overflow-y: auto;\n    border: 1px solid #D9D9D9;\n    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);\n}\n.relect-option li {\n    padding: 0 10px;\n}\n.relect-focused-option {\n    color: #fff;\n    background: #03A9F4;\n}\n\n/* -- arrow -- */\n.relect-arrow {\n    position: absolute;\n    top: 50%;\n    right: 15px;\n    width: 0;\n    height: 0;\n    z-index: 1;\n    font-size: 0;\n    overflow: hidden;\n    margin-top: -3px;\n    border: solid 6px;\n    border-color: #B9B9B9 transparent transparent;\n}\n.relect-arrow:hover {\n    border-color: #A0A0A0 transparent transparent;\n}\n\n/* -- clear -- */\n.relect-clear {\n    position: absolute;\n    cursor: pointer;\n    top: 50%;\n    right: 35px;\n    width: 12px;\n    height: 12px;\n    margin-top: -6px;\n}\n.relect-clear:before,\n.relect-clear:after {\n    position: absolute;\n    content: '';\n    top: 50%;\n    left: 0;\n    width: 100%;\n    height: 2px;\n    margin-top: -1px;\n    border-radius: 100%;\n    background: #B9B9B9;\n    -webkit-transition: background .2s;\n            transition: background .2s;\n}\n.relect-clear:before {\n    -webkit-transform: rotate(45deg);\n            transform: rotate(45deg);\n}\n.relect-clear:after {\n    -webkit-transform: rotate(-45deg);\n            transform: rotate(-45deg);\n}\n.relect-clear:hover:before,\n.relect-clear:hover:after {\n    background: #FF7D7D;\n}\n", ""]);
+	exports.push([module.id, ".wrapper {\n  width: 600px;\n  height: 320px;\n  margin: 0 auto;\n  text-align: center;\n  padding-top: 30px;\n  box-sizing: border-box;\n  border-radius: 6px;\n  background: #fff;\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35); }\n\n.title,\n.intro {\n  color: #fff;\n  text-align: center;\n  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); }\n\n.title {\n  font-size: 70px;\n  margin: 0; }\n  @media (max-width: 600px) {\n    .title {\n      font-size: 40px; } }\n\n.intro {\n  font-size: 30px;\n  margin: 15px 10px 40px; }\n  @media (max-width: 600px) {\n    .intro {\n      font-size: 20px; } }\n\n.btn {\n  cursor: pointer;\n  display: block;\n  width: 300px;\n  color: #586481;\n  font-size: 14px;\n  background: #fff;\n  line-height: 30px;\n  margin: 20px auto 0;\n  border: 1px solid #586481;\n  -webkit-transition: .2s background, .2s color;\n  transition: .2s background, .2s color; }\n  .btn:hover {\n    color: #fff;\n    background: #586481; }\n  .btn:focus {\n    outline: none; }\n", ""]);
 
 	// exports
 
