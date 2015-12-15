@@ -48,6 +48,15 @@ class App extends React.Component {
         this.setState({ disabled: !this.state.disabled });
     }
 
+    selectTywin() {
+        for (let i = 0; i < objectOptions.length; i++) {
+            if (objectOptions[i].text === 'Tywin') {
+                this.setState({ chosen: i });
+                return;
+            }
+        }
+    }
+
     render() {
         return (
             <div style={{paddingTop: (window.innerHeight - 525) / 2}}>
@@ -61,9 +70,10 @@ class App extends React.Component {
                             onChange={this.handleChange.bind(this)}
                     />
                     <div>
-                        <button className="btn" onClick={this.selectFirstOption.bind(this)}>select the first option</button>
+                        <button className="btn" onClick={this.selectFirstOption.bind(this)}>select first option</button>
+                        <button className="btn" onClick={this.selectTywin.bind(this)}>select Tywin</button>
                         <button className="btn" onClick={this.clear.bind(this)}>clear value</button>
-                        <button className="btn" onClick={this.setDisable.bind(this)}>set disable</button>
+                        <button className="btn" onClick={this.setDisable.bind(this)}>{this.state.disabled ? 'enable' : 'set disabled'}</button>
                     </div>
                 </div>
             </div>

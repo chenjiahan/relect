@@ -12,9 +12,6 @@
 .relect:hover .relect-box {
     border-color: #B9B9B9;
 }
-.relect:hover .relect-box-disabled {
-    border-color: #D9D9D9;
-}
 .relect:hover .relect-option {
     border-top-color: #B9B9B9;
 }
@@ -26,6 +23,10 @@
 }
 .relect:focus .relect-option {
     border-top-color: #03A9F4;
+}
+.relect:hover .relect-box-disabled,
+.relect:focus .relect-box-disabled {
+    border-color: #D9D9D9;
 }
 
 /* -- box && option -- */
@@ -90,10 +91,10 @@
     border-color: #B9B9B9 transparent transparent;
 }
 .relect-arrow:hover {
-    border-color: #A0A0A0 transparent transparent;
+    border-top-color: #A0A0A0;
 }
 .relect-box-disabled .relect-arrow:hover {
-    border-color: #B9B9B9 transparent transparent;
+    border-top-color: #B9B9B9;
 }
 
 /* -- clear -- */

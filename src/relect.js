@@ -136,7 +136,6 @@ class Relect extends React.Component {
 
         const props = this.props;
         const { showMenu, focused } = this.state;
-        const tabIndex = props.disabled ? 99999 : props.tabIndex;
 
         const style = {
             width      : props.width,
@@ -146,7 +145,7 @@ class Relect extends React.Component {
         return (
             <div style={style}
                  className="relect"
-                 tabIndex={tabIndex}
+                 tabIndex={props.tabIndex}
                  onBlur={this.handleBlur}
                  onKeyDown={this.handleKeyDown}
             >
@@ -155,8 +154,8 @@ class Relect extends React.Component {
                      onClick={this.toggleMenu}
                      handleClear={this.handleClear}
                 />
-                <Menu ref="menu"
-                      {...props}
+                <Menu {...props}
+                      ref="menu"
                       focused={focused}
                       showMenu={showMenu}
                       focusOption={this.focusOption}

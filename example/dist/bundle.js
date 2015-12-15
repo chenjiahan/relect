@@ -110,6 +110,16 @@
 	            this.setState({ disabled: !this.state.disabled });
 	        }
 	    }, {
+	        key: 'selectTywin',
+	        value: function selectTywin() {
+	            for (var i = 0; i < objectOptions.length; i++) {
+	                if (objectOptions[i].text === 'Tywin') {
+	                    this.setState({ chosen: i });
+	                    return;
+	                }
+	            }
+	        }
+	    }, {
 	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
@@ -140,7 +150,12 @@
 	                        _react2.default.createElement(
 	                            'button',
 	                            { className: 'btn', onClick: this.selectFirstOption.bind(this) },
-	                            'select the first option'
+	                            'select first option'
+	                        ),
+	                        _react2.default.createElement(
+	                            'button',
+	                            { className: 'btn', onClick: this.selectTywin.bind(this) },
+	                            'select Tywin'
 	                        ),
 	                        _react2.default.createElement(
 	                            'button',
@@ -150,7 +165,7 @@
 	                        _react2.default.createElement(
 	                            'button',
 	                            { className: 'btn', onClick: this.setDisable.bind(this) },
-	                            'set disable'
+	                            this.state.disabled ? 'enable' : 'set disabled'
 	                        )
 	                    )
 	                )
@@ -19998,8 +20013,6 @@
 	            var showMenu = _state.showMenu;
 	            var focused = _state.focused;
 
-	            var tabIndex = props.disabled ? 99999 : props.tabIndex;
-
 	            var style = {
 	                width: props.width,
 	                lineHeight: props.height - 2 + 'px'
@@ -20009,7 +20022,7 @@
 	                'div',
 	                { style: style,
 	                    className: 'relect',
-	                    tabIndex: tabIndex,
+	                    tabIndex: props.tabIndex,
 	                    onBlur: this.handleBlur,
 	                    onKeyDown: this.handleKeyDown
 	                },
@@ -20018,8 +20031,8 @@
 	                    onClick: this.toggleMenu,
 	                    handleClear: this.handleClear
 	                })),
-	                _react2.default.createElement(_Menu2.default, _extends({ ref: 'menu'
-	                }, props, {
+	                _react2.default.createElement(_Menu2.default, _extends({}, props, {
+	                    ref: 'menu',
 	                    focused: focused,
 	                    showMenu: showMenu,
 	                    focusOption: this.focusOption,
@@ -20220,7 +20233,7 @@
 
 
 	// module
-	exports.push([module.id, "/* -- relect container -- */\n.relect {\n    cursor: pointer;\n    text-align: left;\n    position: relative;\n    display: inline-block;\n    -webkit-user-select: none;\n       -moz-user-select: none;\n        -ms-user-select: none;\n            user-select: none;\n}\n.relect:hover .relect-box {\n    border-color: #B9B9B9;\n}\n.relect:hover .relect-box-disabled {\n    border-color: #D9D9D9;\n}\n.relect:hover .relect-option {\n    border-top-color: #B9B9B9;\n}\n.relect:focus {\n    outline: none;\n}\n.relect:focus .relect-box {\n    border-color: #03A9F4;\n}\n.relect:focus .relect-option {\n    border-top-color: #03A9F4;\n}\n\n/* -- box && option -- */\n.relect-box,\n.relect-option {\n    width: inherit;\n    background: #fff;\n    -webkit-box-sizing: border-box;\n       -moz-box-sizing: border-box;\n            box-sizing: border-box;\n}\n\n/* -- box -- */\n.relect-box {\n    padding: 0 10px;\n    display: inline-block;\n    border: 1px solid #D9D9D9;\n    -webkit-transition: border-color .1s;\n            transition: border-color .1s;\n}\n.relect-box-disabled {\n    color: #999;\n    cursor: default;\n    background: #f2f2f2;\n}\n.relect-placeholder {\n    color: #999;\n}\n\n/* -- option -- */\n.relect-option {\n    position: absolute;\n    left: 0;\n    margin: 0;\n    padding: 0;\n    z-index: 10;\n    list-style: none;\n    overflow-y: auto;\n    border: 1px solid #D9D9D9;\n    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);\n}\n.relect-option li {\n    padding: 0 10px;\n}\n.relect-focused-option {\n    color: #fff;\n    background: #03A9F4;\n}\n\n/* -- arrow -- */\n.relect-arrow {\n    position: absolute;\n    top: 50%;\n    right: 15px;\n    width: 0;\n    height: 0;\n    z-index: 1;\n    font-size: 0;\n    overflow: hidden;\n    margin-top: -3px;\n    border: solid 6px;\n    border-color: #B9B9B9 transparent transparent;\n}\n.relect-arrow:hover {\n    border-color: #A0A0A0 transparent transparent;\n}\n.relect-box-disabled .relect-arrow:hover {\n    border-color: #B9B9B9 transparent transparent;\n}\n\n/* -- clear -- */\n.relect-clear {\n    position: absolute;\n    cursor: pointer;\n    top: 50%;\n    right: 35px;\n    width: 12px;\n    height: 12px;\n    margin-top: -6px;\n}\n.relect-clear:before,\n.relect-clear:after {\n    position: absolute;\n    content: '';\n    top: 50%;\n    left: 0;\n    width: 100%;\n    height: 2px;\n    margin-top: -1px;\n    border-radius: 100%;\n    background: #B9B9B9;\n    -webkit-transition: background .2s;\n            transition: background .2s;\n}\n.relect-clear:before {\n    -webkit-transform: rotate(45deg);\n            transform: rotate(45deg);\n}\n.relect-clear:after {\n    -webkit-transform: rotate(-45deg);\n            transform: rotate(-45deg);\n}\n.relect-clear:hover:before,\n.relect-clear:hover:after {\n    background: #FF7D7D;\n}\n", ""]);
+	exports.push([module.id, "/* -- relect container -- */\n.relect {\n    cursor: pointer;\n    text-align: left;\n    position: relative;\n    display: inline-block;\n    -webkit-user-select: none;\n       -moz-user-select: none;\n        -ms-user-select: none;\n            user-select: none;\n}\n.relect:hover .relect-box {\n    border-color: #B9B9B9;\n}\n.relect:hover .relect-option {\n    border-top-color: #B9B9B9;\n}\n.relect:focus {\n    outline: none;\n}\n.relect:focus .relect-box {\n    border-color: #03A9F4;\n}\n.relect:focus .relect-option {\n    border-top-color: #03A9F4;\n}\n.relect:hover .relect-box-disabled,\n.relect:focus .relect-box-disabled {\n    border-color: #D9D9D9;\n}\n\n/* -- box && option -- */\n.relect-box,\n.relect-option {\n    width: inherit;\n    background: #fff;\n    -webkit-box-sizing: border-box;\n       -moz-box-sizing: border-box;\n            box-sizing: border-box;\n}\n\n/* -- box -- */\n.relect-box {\n    padding: 0 10px;\n    display: inline-block;\n    border: 1px solid #D9D9D9;\n    -webkit-transition: border-color .1s;\n            transition: border-color .1s;\n}\n.relect-box-disabled {\n    color: #999;\n    cursor: default;\n    background: #f2f2f2;\n}\n.relect-placeholder {\n    color: #999;\n}\n\n/* -- option -- */\n.relect-option {\n    position: absolute;\n    left: 0;\n    margin: 0;\n    padding: 0;\n    z-index: 10;\n    list-style: none;\n    overflow-y: auto;\n    border: 1px solid #D9D9D9;\n    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);\n}\n.relect-option li {\n    padding: 0 10px;\n}\n.relect-focused-option {\n    color: #fff;\n    background: #03A9F4;\n}\n\n/* -- arrow -- */\n.relect-arrow {\n    position: absolute;\n    top: 50%;\n    right: 15px;\n    width: 0;\n    height: 0;\n    z-index: 1;\n    font-size: 0;\n    overflow: hidden;\n    margin-top: -3px;\n    border: solid 6px;\n    border-color: #B9B9B9 transparent transparent;\n}\n.relect-arrow:hover {\n    border-top-color: #A0A0A0;\n}\n.relect-box-disabled .relect-arrow:hover {\n    border-top-color: #B9B9B9;\n}\n\n/* -- clear -- */\n.relect-clear {\n    position: absolute;\n    cursor: pointer;\n    top: 50%;\n    right: 35px;\n    width: 12px;\n    height: 12px;\n    margin-top: -6px;\n}\n.relect-clear:before,\n.relect-clear:after {\n    position: absolute;\n    content: '';\n    top: 50%;\n    left: 0;\n    width: 100%;\n    height: 2px;\n    margin-top: -1px;\n    border-radius: 100%;\n    background: #B9B9B9;\n    -webkit-transition: background .2s;\n            transition: background .2s;\n}\n.relect-clear:before {\n    -webkit-transform: rotate(45deg);\n            transform: rotate(45deg);\n}\n.relect-clear:after {\n    -webkit-transform: rotate(-45deg);\n            transform: rotate(-45deg);\n}\n.relect-clear:hover:before,\n.relect-clear:hover:after {\n    background: #FF7D7D;\n}\n", ""]);
 
 	// exports
 
