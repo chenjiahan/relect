@@ -19869,6 +19869,7 @@
 	    chosen: _react.PropTypes.any,
 	    options: _react.PropTypes.array,
 	    tabIndex: _react.PropTypes.number,
+	    disabled: _react.PropTypes.boolean,
 	    placeholder: _react.PropTypes.string,
 	    optionHeight: _react.PropTypes.number
 	};
@@ -19878,6 +19879,7 @@
 	    height: 40,
 	    options: [],
 	    tabIndex: -1,
+	    disabled: false,
 	    placeholder: '',
 	    optionHeight: 30
 	};
@@ -20159,17 +20161,15 @@
 	        value: function renderContent(props) {
 	            var chosen = props.chosen;
 	            var options = props.options;
+	            var disabled = props.disabled;
 
 	            if (typeof chosen === 'number' && options[chosen] !== undefined) {
+	                var clear = disabled ? null : _react2.default.createElement('span', { className: 'relect-clear', onClick: props.handleClear });
 	                return _react2.default.createElement(
-	                    'div',
+	                    'span',
 	                    null,
-	                    _react2.default.createElement(
-	                        'span',
-	                        null,
-	                        options[chosen].text || options[chosen]
-	                    ),
-	                    _react2.default.createElement('span', { className: 'relect-clear', onClick: props.handleClear })
+	                    options[chosen].text || options[chosen],
+	                    clear
 	                );
 	            } else {
 	                return _react2.default.createElement(
@@ -20582,7 +20582,7 @@
 
 
 	// module
-	exports.push([module.id, ".wrapper {\n  width: 600px;\n  height: 320px;\n  margin: 0 auto;\n  text-align: center;\n  padding-top: 30px;\n  box-sizing: border-box;\n  border-radius: 6px;\n  background: #fff;\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35); }\n\n.title,\n.intro {\n  color: #fff;\n  text-align: center;\n  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); }\n\n.title {\n  font-size: 70px;\n  margin: 0; }\n  @media (max-width: 600px) {\n    .title {\n      font-size: 40px; } }\n\n.intro {\n  font-size: 30px;\n  margin: 15px 10px 40px; }\n  @media (max-width: 600px) {\n    .intro {\n      font-size: 20px; } }\n\n.btn {\n  cursor: pointer;\n  display: block;\n  width: 300px;\n  color: #586481;\n  font-size: 14px;\n  background: #fff;\n  line-height: 30px;\n  margin: 20px auto 0;\n  border: 1px solid #586481;\n  -webkit-transition: .2s background, .2s color;\n  transition: .2s background, .2s color; }\n  .btn:hover {\n    color: #fff;\n    background: #586481; }\n  .btn:focus {\n    outline: none; }\n", ""]);
+	exports.push([module.id, ".wrapper {\n  width: 600px;\n  height: 320px;\n  margin: 0 auto;\n  text-align: center;\n  padding-top: 30px;\n  box-sizing: border-box;\n  border-radius: 6px;\n  background: #fff;\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35); }\n\n.title,\n.intro {\n  color: #fff;\n  text-align: center;\n  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); }\n\n.title {\n  font-size: 70px;\n  margin: 0; }\n  @media (max-width: 600px) {\n    .title {\n      font-size: 40px; } }\n\n.intro {\n  font-size: 30px;\n  margin: 15px 10px 40px; }\n  @media (max-width: 600px) {\n    .intro {\n      font-size: 20px; } }\n\n.btn {\n  cursor: pointer;\n  display: inline-block;\n  width: 35%;\n  color: #586481;\n  font-size: 14px;\n  background: #fff;\n  line-height: 30px;\n  margin: 20px 15px 0;\n  border: 1px solid #586481;\n  -webkit-transition: .2s background, .2s color;\n  transition: .2s background, .2s color; }\n  .btn:hover {\n    color: #fff;\n    background: #586481; }\n  .btn:focus {\n    outline: none; }\n", ""]);
 
 	// exports
 

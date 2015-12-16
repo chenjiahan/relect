@@ -31,13 +31,13 @@
 }
 .btn {
     cursor: pointer;
-    display: block;
-    width: 300px;
+    display: inline-block;
+    width: 35%;
     color: #586481;
     font-size: 14px;
     background: #fff;
     line-height: 30px;
-    margin: 20px auto 0;
+    margin: 20px 15px 0;
     border: 1px solid #586481;
     transition: .2s background, .2s color;
     &:hover {
