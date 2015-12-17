@@ -16,7 +16,6 @@ class Box extends React.Component {
         const props = this.props;
         const className = 'relect-box' + (props.disabled ? ' relect-box-disabled' : '');
 
-
         return (
             <div className={className} onClick={props.onClick} >
                 {this.renderContent(props)}

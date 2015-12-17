@@ -2,12 +2,13 @@
  * Relect v0.1.2
  * =============================== */
 
-import React, { PropTypes } from 'react';
+import React    from 'react';
 import ReactDOM from 'react-dom';
 import Menu     from './Menu';
 import Box      from './Box';
 import './relect.css';
 
+const { PropTypes } = React;
 const propTypes = {
     width        : PropTypes.number,
     height       : PropTypes.number,
@@ -25,7 +26,7 @@ const defaultProps = {
     options      : [],
     tabIndex     : -1,
     disabled     : false,
-    placeholder  : ' ',
+    placeholder  : '',
     optionHeight : 30
 };
 
@@ -58,21 +59,17 @@ class Relect extends React.Component {
 
     handleChoose(index) {
         this.props.onChange(index);
-        this.setState({
-            showMenu : false
-        });
+        this.setState({ showMenu : false });
     };
 
     handleClear(e) {
         e.stopPropagation();
-        this.setState({
-            showMenu : false
-        });
+        this.setState({ showMenu : false });
         this.props.onChange(null);
     };
 
     handleBlur() {
-        this.setState({ showMenu: false })
+        this.setState({ showMenu : false })
     };
 
     handleKeyDown(e) {
@@ -81,7 +78,7 @@ class Relect extends React.Component {
                 this.handleClear(e);
                 break;
             case 27: // Esc
-                this.setState({ showMenu: false });
+                this.setState({ showMenu : false });
                 break;
             case 13: // Enter
             case 32: // Space
@@ -105,7 +102,7 @@ class Relect extends React.Component {
 
     moveFocusedOption(move) {
         if (!this.state.showMenu) {
-            this.setState({ showMenu: true });
+            this.setState({ showMenu : true });
             return;
         }
         let focused = this.state.focused;
@@ -152,16 +149,16 @@ class Relect extends React.Component {
                  onKeyDown={this.handleKeyDown}
             >
                 <Box {...props}
-                    showMenu={showMenu}
-                    onClick={this.toggleMenu}
-                    handleClear={this.handleClear}
+                     showMenu={showMenu}
+                     onClick={this.toggleMenu}
+                     handleClear={this.handleClear}
                 />
                 <Menu {...props}
-                    ref="menu"
-                    focused={focused}
-                    showMenu={showMenu}
-                    focusOption={this.focusOption}
-                    handleChoose={this.handleChoose}
+                      ref="menu"
+                      focused={focused}
+                      showMenu={showMenu}
+                      focusOption={this.focusOption}
+                      handleChoose={this.handleChoose}
                 />
             </div>
         )
