@@ -11,10 +11,12 @@ A Tiny React Single Select Component.
     import React  from 'react';
     import Relect from 'relect';
     
-    var options = [
-        { text: 'one', value: 0 },
+    const options = [
+        { text: 'one', value: 'a' },
         { text: 'two', value: 1 }
     ];
+    
+    const simpleOptions = ['a', 1];
     
     class App extends React.Component {
     

@@ -1,5 +1,5 @@
 /* ===============================
- * Relect v0.0.1
+ * Relect v0.1.2
  * =============================== */
 
 import React, { PropTypes } from 'react';
@@ -14,6 +14,7 @@ const propTypes = {
     chosen       : PropTypes.any,
     options      : PropTypes.array,
     tabIndex     : PropTypes.number,
+    disabled     : PropTypes.bool,
     placeholder  : PropTypes.string,
     optionHeight : PropTypes.number
 };
@@ -23,7 +24,8 @@ const defaultProps = {
     height       : 40,
     options      : [],
     tabIndex     : -1,
-    placeholder  : '',
+    disabled     : false,
+    placeholder  : ' ',
     optionHeight : 30
 };
 
@@ -150,16 +152,16 @@ class Relect extends React.Component {
                  onKeyDown={this.handleKeyDown}
             >
                 <Box {...props}
-                     showMenu={showMenu}
-                     onClick={this.toggleMenu}
-                     handleClear={this.handleClear}
+                    showMenu={showMenu}
+                    onClick={this.toggleMenu}
+                    handleClear={this.handleClear}
                 />
                 <Menu {...props}
-                      ref="menu"
-                      focused={focused}
-                      showMenu={showMenu}
-                      focusOption={this.focusOption}
-                      handleChoose={this.handleChoose}
+                    ref="menu"
+                    focused={focused}
+                    showMenu={showMenu}
+                    focusOption={this.focusOption}
+                    handleChoose={this.handleChoose}
                 />
             </div>
         )

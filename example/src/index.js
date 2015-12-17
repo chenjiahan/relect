@@ -66,7 +66,6 @@ class App extends React.Component {
                     <Relect chosen={this.state.chosen}
                             options={objectOptions}
                             disabled={this.state.disabled}
-                            placeholder={'placeholder'}
                             onChange={this.handleChange.bind(this)}
                     />
                     <div>

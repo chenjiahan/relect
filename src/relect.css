@@ -54,6 +54,7 @@
 }
 .relect-placeholder {
     color: #999;
+    display: inline-block;
 }
 
 /* -- option -- */
