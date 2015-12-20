@@ -138,14 +138,15 @@
 	                _react2.default.createElement(
 	                    'div',
 	                    { className: 'wrapper' },
-	                    _react2.default.createElement(_Relect2.default, { chosen: this.state.chosen,
+	                    _react2.default.createElement(_Relect2.default, { placeholder: 'relect',
 	                        options: objectOptions,
+	                        chosen: this.state.chosen,
 	                        disabled: this.state.disabled,
 	                        onChange: this.handleChange.bind(this)
 	                    }),
 	                    _react2.default.createElement(
 	                        'div',
-	                        null,
+	                        { className: 'btn-area' },
 	                        _react2.default.createElement(
 	                            'button',
 	                            { className: 'btn', onClick: this.selectFirstOption.bind(this) },
@@ -19862,24 +19863,26 @@
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Relect v0.1.2
 	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * =============================== */
 
+	var PropTypes = _react2.default.PropTypes;
+
 	var propTypes = {
-	    width: _react.PropTypes.number,
-	    height: _react.PropTypes.number,
-	    chosen: _react.PropTypes.any,
-	    options: _react.PropTypes.array,
-	    tabIndex: _react.PropTypes.number,
-	    disabled: _react.PropTypes.bool,
-	    placeholder: _react.PropTypes.string,
-	    optionHeight: _react.PropTypes.number
+	    width: PropTypes.number,
+	    height: PropTypes.number,
+	    chosen: PropTypes.any,
+	    options: PropTypes.array,
+	    tabIndex: PropTypes.number,
+	    disabled: PropTypes.bool,
+	    placeholder: PropTypes.string,
+	    optionHeight: PropTypes.number
 	};
 
 	var defaultProps = {
-	    width: 300,
-	    height: 40,
+	    width: 240,
+	    height: 36,
 	    options: [],
 	    tabIndex: -1,
 	    disabled: false,
-	    placeholder: ' ',
+	    placeholder: '',
 	    optionHeight: 30
 	};
 
@@ -19920,17 +19923,13 @@
 	        key: 'handleChoose',
 	        value: function handleChoose(index) {
 	            this.props.onChange(index);
-	            this.setState({
-	                showMenu: false
-	            });
+	            this.setState({ showMenu: false });
 	        }
 	    }, {
 	        key: 'handleClear',
 	        value: function handleClear(e) {
 	            e.stopPropagation();
-	            this.setState({
-	                showMenu: false
-	            });
+	            this.setState({ showMenu: false });
 	            this.props.onChange(null);
 	        }
 	    }, {
@@ -20233,7 +20232,7 @@
 
 
 	// module
-	exports.push([module.id, "/* -- relect container -- */\n.relect {\n    cursor: pointer;\n    text-align: left;\n    position: relative;\n    display: inline-block;\n    -webkit-user-select: none;\n       -moz-user-select: none;\n        -ms-user-select: none;\n            user-select: none;\n}\n.relect:hover .relect-box {\n    border-color: #B9B9B9;\n}\n.relect:hover .relect-option {\n    border-top-color: #B9B9B9;\n}\n.relect:focus {\n    outline: none;\n}\n.relect:focus .relect-box {\n    border-color: #03A9F4;\n}\n.relect:focus .relect-option {\n    border-top-color: #03A9F4;\n}\n.relect:hover .relect-box-disabled,\n.relect:focus .relect-box-disabled {\n    border-color: #D9D9D9;\n}\n\n/* -- box && option -- */\n.relect-box,\n.relect-option {\n    width: inherit;\n    background: #fff;\n    -webkit-box-sizing: border-box;\n       -moz-box-sizing: border-box;\n            box-sizing: border-box;\n}\n\n/* -- box -- */\n.relect-box {\n    padding: 0 10px;\n    display: inline-block;\n    border: 1px solid #D9D9D9;\n    -webkit-transition: border-color .1s;\n            transition: border-color .1s;\n}\n.relect-box-disabled {\n    color: #999;\n    cursor: default;\n    background: #f2f2f2;\n}\n.relect-placeholder {\n    color: #999;\n    display: inline-block;\n}\n\n/* -- option -- */\n.relect-option {\n    position: absolute;\n    left: 0;\n    margin: 0;\n    padding: 0;\n    z-index: 10;\n    list-style: none;\n    overflow-y: auto;\n    border: 1px solid #D9D9D9;\n    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);\n}\n.relect-option li {\n    padding: 0 10px;\n}\n.relect-focused-option {\n    color: #fff;\n    background: #03A9F4;\n}\n\n/* -- arrow -- */\n.relect-arrow {\n    position: absolute;\n    top: 50%;\n    right: 15px;\n    width: 0;\n    height: 0;\n    z-index: 1;\n    font-size: 0;\n    overflow: hidden;\n    margin-top: -3px;\n    border: solid 6px;\n    border-color: #B9B9B9 transparent transparent;\n}\n.relect-arrow:hover {\n    border-top-color: #A0A0A0;\n}\n.relect-box-disabled .relect-arrow:hover {\n    border-top-color: #B9B9B9;\n}\n\n/* -- clear -- */\n.relect-clear {\n    position: absolute;\n    cursor: pointer;\n    top: 50%;\n    right: 35px;\n    width: 12px;\n    height: 12px;\n    margin-top: -6px;\n}\n.relect-clear:before,\n.relect-clear:after {\n    position: absolute;\n    content: '';\n    top: 50%;\n    left: 0;\n    width: 100%;\n    height: 2px;\n    margin-top: -1px;\n    border-radius: 100%;\n    background: #B9B9B9;\n    -webkit-transition: background .2s;\n            transition: background .2s;\n}\n.relect-clear:before {\n    -webkit-transform: rotate(45deg);\n            transform: rotate(45deg);\n}\n.relect-clear:after {\n    -webkit-transform: rotate(-45deg);\n            transform: rotate(-45deg);\n}\n.relect-clear:hover:before,\n.relect-clear:hover:after {\n    background: #FF7D7D;\n}\n", ""]);
+	exports.push([module.id, "/* -- relect container -- */\n.relect {\n    cursor: pointer;\n    text-align: left;\n    position: relative;\n    display: inline-block;\n    -webkit-user-select: none;\n       -moz-user-select: none;\n        -ms-user-select: none;\n            user-select: none;\n}\n.relect:hover .relect-box {\n    border-color: #B9B9B9;\n    box-shadow: 0 0 2px rgba(0, 0, 0, .14);\n}\n.relect:hover .relect-option {\n    border-top-color: #B9B9B9;\n}\n.relect:focus {\n    outline: none;\n}\n.relect:focus .relect-box {\n    border-color: #29B6F6;\n    box-shadow: 0 0 2px rgba(41, 182, 246, .3);\n}\n.relect:focus .relect-option {\n    border-top-color: #29B6F6;\n}\n.relect:hover .relect-box-disabled,\n.relect:focus .relect-box-disabled {\n    box-shadow: none;\n    border-color: #D9D9D9;\n}\n\n/* -- box && option -- */\n.relect-box,\n.relect-option {\n    width: inherit;\n    background: #fff;\n    -webkit-box-sizing: border-box;\n       -moz-box-sizing: border-box;\n            box-sizing: border-box;\n}\n\n/* -- box -- */\n.relect-box {\n    padding: 0 10px;\n    border-radius: 2px;\n    display: inline-block;\n    border: 1px solid #D9D9D9;\n    box-shadow: 0 0 1px rgba(0, 0, 0, .14);\n    -webkit-transition: border-color .2s, box-shadow .2s;\n            transition: border-color .2s, box-shadow .2s;\n}\n.relect-box-disabled {\n    color: #999;\n    cursor: default;\n    background: #f2f2f2;\n    box-shadow: none;\n}\n.relect-placeholder {\n    color: #999;\n    display: inline-block;\n}\n\n/* -- option -- */\n.relect-option {\n    position: absolute;\n    left: 0;\n    margin: 0;\n    padding: 0;\n    z-index: 10;\n    list-style: none;\n    overflow-y: auto;\n    border: 1px solid #D9D9D9;\n    border-radius: 0 0 2px 2px;\n    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);\n}\n.relect-option li {\n    padding: 0 10px;\n}\n.relect-focused-option {\n    color: #fff;\n    background: #29B6F6;\n    border-radius: 2px;\n}\n\n/* -- arrow -- */\n.relect-arrow {\n    position: absolute;\n    top: 50%;\n    right: 12px;\n    width: 0;\n    height: 0;\n    z-index: 1;\n    font-size: 0;\n    overflow: hidden;\n    margin-top: -3px;\n    border: solid 6px;\n    border-color: #B9B9B9 transparent transparent;\n}\n.relect-arrow:hover {\n    border-top-color: #A0A0A0;\n}\n.relect-box-disabled .relect-arrow:hover {\n    border-top-color: #B9B9B9;\n}\n\n/* -- clear -- */\n.relect-clear {\n    position: absolute;\n    cursor: pointer;\n    top: 50%;\n    right: 32px;\n    width: 12px;\n    height: 12px;\n    margin-top: -6px;\n}\n.relect-clear:before,\n.relect-clear:after {\n    position: absolute;\n    content: '';\n    top: 50%;\n    left: 0;\n    width: 100%;\n    height: 2px;\n    margin-top: -1px;\n    border-radius: 100%;\n    background: #B9B9B9;\n    -webkit-transition: background .2s;\n            transition: background .2s;\n}\n.relect-clear:before {\n    -webkit-transform: rotate(45deg);\n            transform: rotate(45deg);\n}\n.relect-clear:after {\n    -webkit-transform: rotate(-45deg);\n            transform: rotate(-45deg);\n}\n.relect-clear:hover:before,\n.relect-clear:hover:after {\n    background: #FF7D7D;\n}\n", ""]);
 
 	// exports
 
@@ -20582,7 +20581,7 @@
 
 
 	// module
-	exports.push([module.id, ".wrapper {\n  width: 600px;\n  height: 320px;\n  margin: 0 auto;\n  text-align: center;\n  padding-top: 30px;\n  box-sizing: border-box;\n  border-radius: 6px;\n  background: #fff;\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35); }\n\n.title,\n.intro {\n  color: #fff;\n  text-align: center;\n  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); }\n\n.title {\n  font-size: 70px;\n  margin: 0; }\n  @media (max-width: 600px) {\n    .title {\n      font-size: 40px; } }\n\n.intro {\n  font-size: 30px;\n  margin: 15px 10px 40px; }\n  @media (max-width: 600px) {\n    .intro {\n      font-size: 20px; } }\n\n.btn {\n  cursor: pointer;\n  display: inline-block;\n  width: 35%;\n  color: #586481;\n  font-size: 14px;\n  background: #fff;\n  line-height: 30px;\n  margin: 20px 15px 0;\n  border: 1px solid #586481;\n  -webkit-transition: .2s background, .2s color;\n  transition: .2s background, .2s color; }\n  .btn:hover {\n    color: #fff;\n    background: #586481; }\n  .btn:focus {\n    outline: none; }\n", ""]);
+	exports.push([module.id, ".wrapper {\n  width: 600px;\n  height: 320px;\n  margin: 0 auto;\n  text-align: center;\n  padding-top: 36px;\n  box-sizing: border-box;\n  border-radius: 4px;\n  background: #fff;\n  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35); }\n\n.title,\n.intro {\n  color: #fff;\n  text-align: center;\n  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2); }\n\n.title {\n  font-size: 70px;\n  margin: 0; }\n  @media (max-width: 600px) {\n    .title {\n      font-size: 40px; } }\n\n.intro {\n  font-size: 30px;\n  margin: 15px 10px 40px; }\n  @media (max-width: 600px) {\n    .intro {\n      font-size: 20px; } }\n\n.btn {\n  cursor: pointer;\n  display: inline-block;\n  width: 35%;\n  color: #586481;\n  font-size: 14px;\n  background: #fff;\n  line-height: 30px;\n  border-radius: 2px;\n  margin: 20px 15px 0;\n  border: 1px solid #586481;\n  -webkit-transition: .2s background, .2s color;\n  transition: .2s background, .2s color; }\n  .btn:hover {\n    color: #fff;\n    background: #586481; }\n  .btn:focus {\n    outline: none; }\n\n.btn-area {\n  margin-top: 16px; }\n", ""]);
 
 	// exports
 

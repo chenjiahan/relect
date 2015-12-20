@@ -11,6 +11,7 @@
 }
 .relect:hover .relect-box {
     border-color: #B9B9B9;
+    box-shadow: 0 0 2px rgba(0, 0, 0, .14);
 }
 .relect:hover .relect-option {
     border-top-color: #B9B9B9;
@@ -19,13 +20,15 @@
     outline: none;
 }
 .relect:focus .relect-box {
-    border-color: #03A9F4;
+    border-color: #29B6F6;
+    box-shadow: 0 0 2px rgba(41, 182, 246, .3);
 }
 .relect:focus .relect-option {
-    border-top-color: #03A9F4;
+    border-top-color: #29B6F6;
 }
 .relect:hover .relect-box-disabled,
 .relect:focus .relect-box-disabled {
+    box-shadow: none;
     border-color: #D9D9D9;
 }
 
@@ -42,15 +45,18 @@
 /* -- box -- */
 .relect-box {
     padding: 0 10px;
+    border-radius: 2px;
     display: inline-block;
     border: 1px solid #D9D9D9;
-    -webkit-transition: border-color .1s;
-            transition: border-color .1s;
+    box-shadow: 0 0 1px rgba(0, 0, 0, .14);
+    -webkit-transition: border-color .2s, box-shadow .2s;
+            transition: border-color .2s, box-shadow .2s;
 }
 .relect-box-disabled {
     color: #999;
     cursor: default;
     background: #f2f2f2;
+    box-shadow: none;
 }
 .relect-placeholder {
     color: #999;
@@ -67,6 +73,7 @@
     list-style: none;
     overflow-y: auto;
     border: 1px solid #D9D9D9;
+    border-radius: 0 0 2px 2px;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 .relect-option li {
@@ -74,14 +81,15 @@
 }
 .relect-focused-option {
     color: #fff;
-    background: #03A9F4;
+    background: #29B6F6;
+    border-radius: 2px;
 }
 
 /* -- arrow -- */
 .relect-arrow {
     position: absolute;
     top: 50%;
-    right: 15px;
+    right: 12px;
     width: 0;
     height: 0;
     z-index: 1;
@@ -103,7 +111,7 @@
     position: absolute;
     cursor: pointer;
     top: 50%;
-    right: 35px;
+    right: 32px;
     width: 12px;
     height: 12px;
     margin-top: -6px;

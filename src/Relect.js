@@ -21,8 +21,8 @@ const propTypes = {
 };
 
 const defaultProps = {
-    width        : 300,
-    height       : 40,
+    width        : 240,
+    height       : 36,
     options      : [],
     tabIndex     : -1,
     disabled     : false,

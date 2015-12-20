@@ -63,12 +63,13 @@ class App extends React.Component {
                 <h1 className="title">Relect</h1>
                 <h3 className="intro">A Tiny React Single Select Component.</h3>
                 <div className="wrapper">
-                    <Relect chosen={this.state.chosen}
+                    <Relect placeholder={'relect'}
                             options={objectOptions}
+                            chosen={this.state.chosen}
                             disabled={this.state.disabled}
                             onChange={this.handleChange.bind(this)}
                     />
-                    <div>
+                    <div className="btn-area">
                         <button className="btn" onClick={this.selectFirstOption.bind(this)}>select first option</button>
                         <button className="btn" onClick={this.selectTywin.bind(this)}>select Tywin</button>
                         <button className="btn" onClick={this.clear.bind(this)}>clear value</button>

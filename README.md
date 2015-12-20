@@ -41,8 +41,8 @@ A Tiny React Single Select Component.
 
 Property|Type|Default|Description
 ---|---|---|---
-width|number|300|width of select
-height|number|40|height of select
+width|number|240|width of select
+height|number|36|height of select
 options|array|/|options
 chosen|number|/|index of chosen option
 tabIndex|number|-1|tab order

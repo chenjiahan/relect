@@ -3,9 +3,9 @@
     height: 320px;
     margin: 0 auto;
     text-align: center;
-    padding-top: 30px;
+    padding-top: 36px;
     box-sizing: border-box;
-    border-radius: 6px;
+    border-radius: 4px;
     background: #fff;
     box-shadow: 0 1px 3px rgba(0, 0, 0, .35);
 }
@@ -37,6 +37,7 @@
     font-size: 14px;
     background: #fff;
     line-height: 30px;
+    border-radius: 2px;
     margin: 20px 15px 0;
     border: 1px solid #586481;
     transition: .2s background, .2s color;
@@ -47,4 +48,7 @@
     &:focus {
         outline: none;
     }
+}
+.btn-area {
+    margin-top: 16px;
 }
