@@ -27,8 +27,9 @@ class App extends React.Component {
         super(props);
 
         this.state = {
-            chosen: null,
-            disabled: false
+            chosen   : null,
+            disabled : false,
+            option   : objectOptions
         }
     }
 
@@ -57,6 +58,14 @@ class App extends React.Component {
         }
     }
 
+    simpleOption() {
+        this.setState({ option : arrayOptions });
+    }
+
+    objectOption() {
+        this.setState({ option : objectOptions });
+    }
+
     render() {
         return (
             <div style={{paddingTop: (window.innerHeight - 525) / 2}}>
@@ -64,7 +73,7 @@ class App extends React.Component {
                 <h3 className="intro">A Tiny React Single Select Component.</h3>
                 <div className="wrapper">
                     <Relect placeholder={'relect'}
-                            options={objectOptions}
+                            options={this.state.option}
                             chosen={this.state.chosen}
                             disabled={this.state.disabled}
                             onChange={this.handleChange.bind(this)}
@@ -74,6 +83,8 @@ class App extends React.Component {
                         <button className="btn" onClick={this.selectTywin.bind(this)}>select Tywin</button>
                         <button className="btn" onClick={this.clear.bind(this)}>clear value</button>
                         <button className="btn" onClick={this.setDisable.bind(this)}>{this.state.disabled ? 'enable' : 'set disabled'}</button>
+                        <button className="btn" onClick={this.simpleOption.bind(this)}>simple option</button>
+                        <button className="btn" onClick={this.objectOption.bind(this)}>object option</button>
                     </div>
                 </div>
             </div>
