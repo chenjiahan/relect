@@ -79,10 +79,22 @@
 .relect-option li {
     padding: 0 10px;
 }
+.relect-option::-webkit-scrollbar {
+    width: 8px;
+}
+.relect-option::-webkit-scrollbar-thumb {
+    border-radius: 8px;
+    background: rgba(0, 0, 0, .1);
+    box-shadow: inset 1px 1px rgba(0, 0, 0, .1);
+}
+.relect-option::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, .2);
+}
 .relect-focused-option {
     color: #fff;
     background: #29B6F6;
     border-radius: 2px;
+    box-shadow: 0 0 1px rgba(0,0,0,.14);
 }
 
 /* -- arrow -- */

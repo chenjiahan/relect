@@ -25,7 +25,7 @@ class Menu extends React.Component {
             )
         });
 
-        return <ul className="relect-option" style={style}>{options}</ul>;
+        return <ul className="relect-option thin-scroll" style={style}>{options}</ul>;
     }
 }
 
