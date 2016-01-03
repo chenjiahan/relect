@@ -3,3 +3,4 @@ webpack.config.js
 example
 .npmignore
 .idea
+node_modules

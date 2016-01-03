@@ -1,5 +1,5 @@
 /* ===============================
- * Relect v0.1.2
+ * Relect v1.0.0 https://github.com/chenjiahan/relect
  * =============================== */
 
 import React    from 'react';
