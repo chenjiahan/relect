@@ -7,36 +7,36 @@ A Tiny React Single Select Component.
     npm install relect
 
 ## Usage
+``` javascript
+import React  from 'react';
+import Relect from 'relect';
 
-    import React  from 'react';
-    import Relect from 'relect';
+const options = [
+    { text: 'one', value: 1 },
+    { text: 'two', value: 2 }
+];
+
+class App extends React.Component {
+
+    constructor(props) {
+        super(props);
+        this.state = { chosen : null }
+    }
     
-    const options = [
-        { text: 'one', value: 1 },
-        { text: 'two', value: 2 }
-    ];
-    
-    class App extends React.Component {
-    
-        constructor(props) {
-            super(props);
-            this.state = { chosen : null }
-        }
-        
-        onChange(index) {
-            this.setState({ chosen : index });
-        }
-    
-        render() {
-            return (
-                <Relect options={options}
-                        chosen={this.state.chosen}
-                        onChange={this.onChange.bind(this)}
-                />
-            )
-        }
+    onChange(index) {
+        this.setState({ chosen : index });
     }
 
+    render() {
+        return (
+            <Relect options={options}
+                    chosen={this.state.chosen}
+                    onChange={this.onChange.bind(this)}
+            />
+        )
+    }
+}
+```
 ## Props
 
 Property|Type|Default|Description
