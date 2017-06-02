@@ -1,10 +1,8 @@
 import React from 'react';
 
 class Menu extends React.Component {
-
     render() {
-
-        const props = this.props;
+        const { props } = this;
         const style = {
             top        : props.height - 1,
             display    : props.showMenu && !props.disabled ? '' : 'none',
@@ -17,7 +15,7 @@ class Menu extends React.Component {
             return (
                 <li key={index}
                     className={className}
-                    onClick={props.handleChoose.bind(null, index)}
+                    onClick={props.onChoose.bind(null, index)}
                     onMouseEnter={props.focusOption.bind(null, index)}
                 >
                     {item.text || item}
@@ -25,7 +23,7 @@ class Menu extends React.Component {
             )
         });
 
-        return <ul className="relect-option thin-scroll" style={style}>{options}</ul>;
+        return <ul className="relect-option" style={style}>{options}</ul>;
     }
 }
 

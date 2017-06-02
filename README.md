@@ -4,12 +4,15 @@ A Tiny React Single Select Component.
 
 ## Install
 
-    npm install relect
+    npm i relect -S
 
 ## Usage
 ``` javascript
 import React  from 'react';
 import Relect from 'relect';
+
+// include styles
+import 'relect/lib/relect.css';
 
 const options = [
     { text: 'one', value: 1 },
@@ -47,5 +50,6 @@ options|array|/|options
 chosen|number|/|index of chosen option
 tabIndex|number|-1|tab order
 disabled|bool|false|whether to disable select
+autoBlur|bool|false|auto blur after selection 
 placeholder|string|/|placeholder text
 optionHeight|number|30|height of option

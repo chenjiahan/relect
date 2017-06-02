@@ -1,7 +1,10 @@
 import React    from 'react';
 import ReactDOM from 'react-dom';
-import Relect   from '../../src/Relect';
+// import Relect   from '../../src/Relect';
 import './index.scss';
+import '../../lib/relect.css';
+import Relect from '../../lib';
+
 
 const objectOptions = [
     { val: 0, text: 'Jon Snow' },

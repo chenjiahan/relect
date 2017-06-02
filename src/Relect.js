@@ -1,81 +1,71 @@
 /* ===============================
- * Relect v1.0.0 https://github.com/chenjiahan/relect
+ * Relect v1.1.0 
+ * https://github.com/chenjiahan/relect
  * =============================== */
 
-import React    from 'react';
-import ReactDOM from 'react-dom';
-import Menu     from './Menu';
-import Box      from './Box';
-import './relect.css';
-
-const { PropTypes } = React;
-const propTypes = {
-    width        : PropTypes.number,
-    height       : PropTypes.number,
-    chosen       : PropTypes.any,
-    options      : PropTypes.array,
-    tabIndex     : PropTypes.number,
-    disabled     : PropTypes.bool,
-    placeholder  : PropTypes.string,
-    optionHeight : PropTypes.number
-};
-
-const defaultProps = {
-    width        : 240,
-    height       : 36,
-    options      : [],
-    tabIndex     : -1,
-    disabled     : false,
-    placeholder  : '',
-    optionHeight : 30
-};
+import React     from 'react';
+import ReactDOM  from 'react-dom';
+import PropTypes from 'prop-types';
+import Menu      from './Menu';
+import Box       from './Box';
 
 class Relect extends React.Component {
 
-    constructor(props) {
-        super(props);
+    static propTypes = {
+        width        : PropTypes.number,
+        height       : PropTypes.number,
+        chosen       : PropTypes.any,
+        options      : PropTypes.array,
+        tabIndex     : PropTypes.number,
+        autoBlur     : PropTypes.bool,
+        disabled     : PropTypes.bool,
+        placeholder  : PropTypes.string,
+        optionHeight : PropTypes.number
+    };
 
-        this.state = {
-            focused  : null,  // index of focused option
-            showMenu : false  // whether show option
-        };
+    static defaultProps = {
+        width        : 240,
+        height       : 36,
+        options      : [],
+        tabIndex     : -1,
+        autoBlur     : false,
+        disabled     : false,
+        placeholder  : '',
+        optionHeight : 30
+    };
 
-        this.toggleMenu        = this.toggleMenu.bind(this);
-        this.handleBlur        = this.handleBlur.bind(this);
-        this.handleClear       = this.handleClear.bind(this);
-        this.handleChoose      = this.handleChoose.bind(this);
-        this.handleKeyDown     = this.handleKeyDown.bind(this);
-        this.focusOption       = this.focusOption.bind(this);
-        this.moveFocusedOption = this.moveFocusedOption.bind(this);
-    }
+    state = {
+        focused  : null,  // index of focused option
+        showMenu : false  // whether show option
+    };
 
-    componentDidMount() {
-        this.menuDOM = ReactDOM.findDOMNode(this.refs.menu);
-    }
-
-    toggleMenu() {
+    toggleMenu = () => {
         this.setState({ showMenu: !this.state.showMenu });
     };
 
-    handleChoose(index) {
+    onChoose = index => {
         this.props.onChange(index);
         this.setState({ showMenu : false });
+
+        if (this.props.autoBlur) {
+            this.relectDOM && this.relectDOM.blur();
+        }
     };
 
-    handleClear(e) {
+    onClear = e => {
         e.stopPropagation();
         this.setState({ showMenu : false });
         this.props.onChange(null);
     };
 
-    handleBlur() {
+    onBlur = () => {
         this.setState({ showMenu : false })
     };
 
-    handleKeyDown(e) {
+    onKeyDown = e => {
         switch (e.which) {
             case 8 : // Delete
-                this.handleClear(e);
+                this.onClear(e);
                 break;
             case 27: // Esc
                 this.setState({ showMenu : false });
@@ -83,7 +73,7 @@ class Relect extends React.Component {
             case 13: // Enter
             case 32: // Space
                 if (this.state.showMenu && this.state.focused !== null) {
-                    this.handleChoose(this.state.focused);
+                    this.onChoose(this.state.focused);
                 } else {
                     this.toggleMenu();
                 }
@@ -100,18 +90,19 @@ class Relect extends React.Component {
         e.preventDefault();
     };
 
-    moveFocusedOption(move) {
+    moveFocusedOption = move => {
         if (!this.state.showMenu) {
             this.setState({ showMenu : true });
             return;
         }
-        let focused = this.state.focused;
-        let length  = this.props.options.length;
+
+        let { focused } = this.state;
+        let { length } = this.props.options;
         focused = focused === null ? 0 : (focused + move + length) % length;
         this.focusOption(focused);
     };
 
-    focusOption(focused) {
+    focusOption = focused => {
         this.setState({ focused });
 
         // calc offset
@@ -132,40 +123,37 @@ class Relect extends React.Component {
     };
 
     render() {
-
-        const props = this.props;
+        const { props } = this;
         const { showMenu, focused } = this.state;
-
         const style = {
             width      : props.width,
             lineHeight : props.height - 2 + 'px'
         };
 
         return (
-            <div style={style}
-                 className="relect"
-                 tabIndex={props.tabIndex}
-                 onBlur={this.handleBlur}
-                 onKeyDown={this.handleKeyDown}
+            <div 
+                style={style}
+                className="relect"
+                tabIndex={props.tabIndex}
+                onBlur={this.onBlur}
+                onKeyDown={this.onKeyDown}
+                ref={node => { this.relectDOM = node; }}
             >
                 <Box {...props}
                      showMenu={showMenu}
                      onClick={this.toggleMenu}
-                     handleClear={this.handleClear}
+                     onClear={this.onClear}
                 />
                 <Menu {...props}
-                      ref="menu"
                       focused={focused}
                       showMenu={showMenu}
                       focusOption={this.focusOption}
-                      handleChoose={this.handleChoose}
+                      onChoose={this.onChoose}
+                      ref={node => { this.menuDOM = node; }}
                 />
             </div>
         )
     }
 }
-
-Relect.propTypes = propTypes;
-Relect.defaultProps = defaultProps;
 
 export default Relect;
