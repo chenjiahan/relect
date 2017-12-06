@@ -2,7 +2,7 @@
   "name": "relect",
   "version": "1.1.0",
   "description": "A Tiny React Single Select Component.",
-  "main": "lib/Relect.js",
+  "main": "lib/index.js",
   "devDependencies": {
     "autoprefixer-loader": "^3.1.0",
     "babel": "^6.1.18",
