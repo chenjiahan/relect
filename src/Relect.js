@@ -58,8 +58,10 @@ class Relect extends React.Component {
         this.props.onChange(null);
     };
 
-    onBlur = () => {
-        this.setState({ showMenu : false })
+    onBlur = (e) => {
+        if (e.target === e.currentTarget) {
+            this.setState({ showMenu : false })    
+        }
     };
 
     onKeyDown = e => {
